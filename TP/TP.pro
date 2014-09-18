@@ -4,8 +4,14 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    Image.cpp
+    image.cpp \
+    imagecouleur.cpp \
+    imageniveauxgris.cpp \
+    pixelcouleur.cpp
 
 HEADERS += \
-    Image.h
+    image.h \
+    imagecouleur.h \
+    imageniveauxgris.h \
+    pixelcouleur.h
 
