@@ -18,6 +18,7 @@ int PixelCouleur::getV()
 
 int PixelCouleur::getB()
 {
+
 }
 
 std::vector<int> PixelCouleur::getRVB()

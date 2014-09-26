@@ -2,6 +2,7 @@
 
 ImageCouleur::ImageCouleur(std::string nomFichierPPM)
 {
+
 }
 
 ImageCouleur::~ImageCouleur()

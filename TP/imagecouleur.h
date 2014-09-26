@@ -8,6 +8,7 @@
 
 class ImageCouleur : public Image
 {
+private:
     std::vector<PixelCouleur> m_tableauPixels ;
 
 public:

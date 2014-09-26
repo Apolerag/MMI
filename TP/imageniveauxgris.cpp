@@ -7,8 +7,10 @@ ImageNiveauxGris::ImageNiveauxGris(std::string nomFichierPGM)
     std::ifstream fichier;
     fichier.open(nomFichierPGM.c_str());  // on ouvre le fichier en lecture
 
+
     if(fichier)  // si l'ouverture a réussi
     {
+
         // instructions
         fichier.close();  // on ferme le fichier
     }
@@ -20,10 +22,13 @@ ImageNiveauxGris::~ImageNiveauxGris()
 {
 }
 
-std::vector<int> ImageNiveauxGris::getTableauPixels()
+
+int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne)
 {
+    return m_tableauPixels[ligne * m_nbColonnes + colonne];
 }
 
-int ImageNiveauxGris::getElementTableauPixels(int ligne, int colonne)
+const int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne) const
 {
+    return m_tableauPixels[ligne * m_nbColonnes + colonne];
 }

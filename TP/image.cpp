@@ -1,6 +1,6 @@
 #include "image.h"
 
-Image::Image()
+Image::Image(int ligne, int colonne,  int niveauIntensite) : m_nbLignes(ligne), m_nbColonnes(colonne), m_niveauxIntensite(niveauIntensite)
 {
 }
 
@@ -8,10 +8,14 @@ Image::~Image()
 {
 }
 
-int Image::getNbColonnes() {
+const int Image::getNbColonnes() {
     return m_nbColonnes;
 }
 
-int Image::getNbLignes() {
+const int Image::getNbLignes() {
     return m_nbLignes;
+}
+
+const int Image::getNiveauxIntensite(){
+    return m_niveauxIntensite;
 }

@@ -5,6 +5,7 @@
 
 class PixelCouleur
 {
+private:
     int m_R;
     int m_V;
     int m_B;

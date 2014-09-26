@@ -7,14 +7,16 @@
 
 class ImageNiveauxGris : public Image
 {
+private:
     std::vector<int> m_tableauPixels;
 
 public:
-    ImageNiveauxGris(std::string nomFichierPGM);
+    ImageNiveauxGris(const std::string & nomFichierPGM);
     ~ImageNiveauxGris();
 
-    std::vector<int> getTableauPixels();
-    int getElementTableauPixels(int ligne, int colonne);
+
+    int & elementTableauPixels(int ligne, int colonne);
+    const int & elementTableauPixels(int ligne, int colonne) const;
 };
 
 #endif // IMAGENIVEAUXGRIS_H
