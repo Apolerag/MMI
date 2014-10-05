@@ -2,7 +2,6 @@
 #define IMAGENIVEAUXGRIS_H
 
 #include "image.h"
-#include <string>
 #include <vector>
 
 class ImageNiveauxGris : public Image
@@ -17,6 +16,7 @@ public:
 
     int & elementTableauPixels(int ligne, int colonne);
     const int & elementTableauPixels(int ligne, int colonne) const;
+    void sauverDansFichierPGM(const std::string & nomFichierPGM) const;
 };
 
 #endif // IMAGENIVEAUXGRIS_H

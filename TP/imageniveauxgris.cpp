@@ -2,24 +2,45 @@
 #include <fstream>
 #include <iostream>
 
-ImageNiveauxGris::ImageNiveauxGris(std::string nomFichierPGM)
+ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 {
+    /** On considère pour le moment que le fichier ne contient pas de caractères */
+
     std::ifstream fichier;
-    fichier.open(nomFichierPGM.c_str());  // on ouvre le fichier en lecture
+    // vérifier extension PGM
+    fichier.open(nomFichierPGM.c_str());
 
-
-    if(fichier)  // si l'ouverture a réussi
+    if(fichier)
     {
+        std::string mode_encodage ;
+        fichier >> mode_encodage ;
 
-        // instructions
-        fichier.close();  // on ferme le fichier
+        if(mode_encodage.compare("P2") != 0) {
+            std::cerr << "Le fichier est encodé en binaire, impossible de le lire !" << std::endl;
+            return ;
+        }
+
+        int temp ;
+
+        fichier >> m_nbColonnes >> m_nbLignes >> m_niveauxIntensite;
+        m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
+
+        for(int i = 0; i < m_nbColonnes; i++) {
+            for(int j = 0; j < m_nbLignes; j++) {
+                fichier >> temp ;
+                m_tableauPixels.push_back(temp);
+            }
+        }
+        
+        fichier.close();
     }
-    else  // sinon
-        std::cerr << "Impossible d'ouvrir le fichier !" << std::endl;
+    else 
+        std::cerr << "Impossible d'ouvrir le fichier pour le lire." << std::endl;
 }
 
 ImageNiveauxGris::~ImageNiveauxGris()
 {
+    std::vector<int>().swap(m_tableauPixels);
 }
 
 
@@ -31,4 +52,24 @@ int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne)
 const int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne) const
 {
     return m_tableauPixels[ligne * m_nbColonnes + colonne];
+}
+
+void ImageNiveauxGris::sauverDansFichierPGM(const std::string & nomFichierPGM) const 
+{
+
+    std::ofstream fichier;
+    fichier.open((nomFichierPGM + ".pgm").c_str());
+
+    if(fichier) {
+
+        fichier << "P2" << m_nbColonnes << m_nbLignes << m_niveauxIntensite;
+        for(int i = 0; i < m_nbColonnes; i++) {
+            for(int j = 0; j < m_nbLignes; j++) {
+                // voir comment revenir à la ligne
+            }
+        }
+    }
+    else
+        std::cerr << "Impossible d'ouvrir le fichier pour écrire dedans." << std::endl;
+
 }

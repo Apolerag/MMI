@@ -1,19 +1,19 @@
-CC=g++
-CFLAGS=-c -Wall
+CXX=g++
+CXXFLAGS=-c -Wall -ansi -pedantic
 
-all: main.out
+all: Programme.exe
 
-main.out: main.o factorial.o hello.o
-  $(CC) main.o factorial.o hello.o -o hello
+Programme.exe: main.o image.o imageniveauxgris.o
+		$(CXX) main.o image.o imageniveauxgris.o -o Programme.exe
 
-main.o: main.cpp
-  $(CC) $(CFLAGS) main.cpp
+main.o: main.cpp image.h imageniveauxgris.h
+		$(CXX) $(CXXFLAGS) main.cpp -o main.o
 
-factorial.o: factorial.cpp
-  $(CC) $(CFLAGS) factorial.cpp
+image.o: image.cpp
+		$(CXX) $(CXXFLAGS) image.cpp
 
-hello.o: hello.cpp
-  $(CC) $(CFLAGS) hello.cpp
+imageniveauxgris.o: imageniveauxgris.cpp
+		$(CXX) $(CXXFLAGS) imageniveauxgris.cpp
 
 clean:
-	rm -rf *o main.out
+		rm -rf *.o *.exe

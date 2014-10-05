@@ -1,21 +1,19 @@
 #include "image.h"
 
-Image::Image(int ligne, int colonne,  int niveauIntensite) : m_nbLignes(ligne), m_nbColonnes(colonne), m_niveauxIntensite(niveauIntensite)
-{
-}
+Image::Image() : m_nbColonnes(0), m_nbLignes(0), m_niveauxIntensite(0) 
+{}
 
-Image::~Image()
+const int Image::getNbColonnes() const
 {
-}
-
-const int Image::getNbColonnes() {
     return m_nbColonnes;
 }
 
-const int Image::getNbLignes() {
+const int Image::getNbLignes() const
+{
     return m_nbLignes;
 }
 
-const int Image::getNiveauxIntensite(){
+const int Image::getNiveauxIntensite() const
+{
     return m_niveauxIntensite;
 }

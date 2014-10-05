@@ -1,23 +1,23 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
+#include <string>
+
 class Image
 {
-private:
+protected:
+	std::string m_modeCode ; /** P2 ou P5 */
     int m_nbColonnes ;
     int m_nbLignes ;
     int m_niveauxIntensite ;
 
-protected:
-    Image();
-
 public:
-    Image(int ligne, int colonne, int niveauIntensite);
-    ~Image();
+    Image();
+    ~Image() = default;
 
-    const int getNbColonnes();
-    const int getNbLignes();
-    const int getNiveauxIntensite();
+    const int getNbColonnes() const;
+    const int getNbLignes() const;
+    const int getNiveauxIntensite() const;
 };
 
 #endif // IMAGE_H
