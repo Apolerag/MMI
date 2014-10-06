@@ -68,6 +68,8 @@ void ImageNiveauxGris::sauverDansFichierPGM(const std::string & nomFichierPGM) c
                 // voir comment revenir à la ligne
             }
         }
+
+        fichier.close();
     }
     else
         std::cerr << "Impossible d'ouvrir le fichier pour écrire dedans." << std::endl;

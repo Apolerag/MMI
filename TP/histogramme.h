@@ -1,13 +1,23 @@
 #ifndef HISTOGRAMME_H
 #define HISTOGRAMME_H
 
-class Histogramme 
+#include "imageniveauxgris.h"
+#include "imagecouleur.h"
+
+#include <vector>
+
+class Histogramme
 {
 private:
+	std::vector<int> m_tableauDonnees;
 
 public:
-	Histogramme();
+	Histogramme(const ImageNiveauxGris & img);
+	// Histogramme(const ImageCouleur & img); travailler sur la luminance
 	~Histogramme();
+
+	void sauverDansFichierTXT();
+	void sauverDansFichierTXT(const std::string & nomFichierTXT);
 };
 
 #endif
