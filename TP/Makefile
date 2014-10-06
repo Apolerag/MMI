@@ -1,19 +1,17 @@
 CXX=g++
 CXXFLAGS=-c -Wall -ansi -pedantic
 
-all: Programme.exe
+SRC = $(wildcard *.cpp)
+OBJ = $(SRC:.cpp=.o)
+EXEC = programme.exe
 
-Programme.exe: main.o image.o imageniveauxgris.o
-		$(CXX) main.o image.o imageniveauxgris.o -o Programme.exe
+all: $(EXEC)
 
-main.o: main.cpp image.h imageniveauxgris.h
-		$(CXX) $(CXXFLAGS) main.cpp -o main.o
+$(EXEC): $(OBJ)
+	$(CXX) $(OBJ)  -o $@
 
-image.o: image.cpp
-		$(CXX) $(CXXFLAGS) image.cpp
-
-imageniveauxgris.o: imageniveauxgris.cpp
-		$(CXX) $(CXXFLAGS) imageniveauxgris.cpp
+%.o: %.cpp %.h
+	$(CXX) $(CXXFLAGS) $<
 
 clean:
-		rm -rf *.o *.exe
+	rm -rf *.o *.exe
