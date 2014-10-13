@@ -18,6 +18,11 @@ Histogramme::Histogramme(const ImageNiveauxGris & img)
 
 }
 
+Histogramme::Histogramme()
+{
+
+}
+
 Histogramme::~Histogramme()
 {
 	std::vector<int>().swap(m_tableauDonnees);
@@ -48,5 +53,24 @@ void Histogramme::sauverDansFichierTXT(const std::string & nomFichierTXT)
     	fichier.close();
     }
     else
-    	std::cerr << "Impossible d'ouvrir le fichier pour écrire dedans." << std::endl;
+    	std::cerr << "Impossible d'ouvrir le fichier "<< nomFichierTXT <<"pour écrire dedans." << std::endl;
+}
+
+void Histogramme::ecrireDansFichierTxt(const std::string & nomFichierTXT)
+{
+	std::ifstream fichier;
+    fichier.open(nomFichierTXT.c_str());
+
+    if(fichier)
+    {
+    	for (unsigned int i = 0; i < m_tableauDonnees.size(); ++i)
+    	{
+    		fichier >> i >> " " >> m_tableauDonnees[i] >> std::endl ;
+    	}
+        
+        
+        fichier.close();
+    }
+    else 
+        std::cerr << "Impossible d'ouvrir le fichier pour le lire." << std::endl;
 }

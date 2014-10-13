@@ -4,7 +4,7 @@
 
 ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 {
-    /** On considère pour le moment que le fichier ne contient pas de caractères */
+    /** On considère pour le moment que le fichier ne contient pas de commentaires */
 
     std::ifstream fichier;
     // vérifier extension PGM

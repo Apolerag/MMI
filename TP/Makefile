@@ -1,4 +1,4 @@
-CXX=g++
+CXX=clang++
 CXXFLAGS=-c -Wall -ansi -pedantic
 
 SRC = main.cpp image.cpp imageniveauxgris.cpp histogramme.cpp 
