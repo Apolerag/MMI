@@ -20,7 +20,7 @@ public:
 	void sauverDansFichierTXT();
 	void sauverDansFichierTXT(const std::string & nomFichierTXT);
 
-	void ecrireDansFichierTxt(const std::string & nomFichierTXT);
+	void lireDansFichierTXT(const std::string & nomFichierTXT);
 };
 
 #endif

@@ -1,7 +1,8 @@
 CXX=clang++
-CXXFLAGS=-c -Wall -ansi -pedantic
+CXXFLAGS=-c -Wall -ansi -pedantic -Wc++11-extensions
 
-SRC = main.cpp image.cpp imageniveauxgris.cpp histogramme.cpp 
+#SRC = main.cpp image.cpp imageniveauxgris.cpp histogramme.cpp 
+SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
 EXEC = programme.exe
 

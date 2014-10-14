@@ -1,0 +1,7 @@
+# Histogramme sur 5 niveaux d'intensite
+# Intensite / Compte
+0 25
+1 24
+2 21
+3 16
+4 9
