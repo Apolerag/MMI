@@ -1,0 +1,8 @@
+#Consommation
+set terminal png size 800,500
+set output 'histogramme_image.png'
+set xlabel "Valeur de pixel"
+set ylabel "nombre de pixels"
+set title "histogramme"
+plot "res.txt" index 0 using 1:2 with boxes title "nbPixel"
+	
