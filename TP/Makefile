@@ -15,4 +15,4 @@ $(EXEC): $(OBJ)
 	$(CXX) $(CXXFLAGS) $<
 
 clean:
-	rm -rf *.o *.exe
+	rm -rf *.o *.exe *~

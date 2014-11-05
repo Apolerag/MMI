@@ -6,7 +6,7 @@
 class Image
 {
 protected:
-	std::string m_modeCode ; /** P2 ou P5 */
+	std::string m_mode_encodage ; /** P2 ou P5 */
     int m_nbColonnes ;
     int m_nbLignes ;
     int m_niveauxIntensite ;
