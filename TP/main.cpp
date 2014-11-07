@@ -5,12 +5,14 @@
 
 int main()
 {
-	ImageNiveauxGris i("truc.pgm");
-	i.sauverDansFichierPGM("res");
-	Histogramme h = Histogramme();
-/*	h.lireDansFichierTXT("res.txt");
-	h.sauverDansFichierTXT("res.txt");	*/ 
-    std::cout << "Hello World!" << std::endl;
+	std::string fichierOuv("truc.pgm");
+	std::string fichierFerm("resultat.pgm");	
+
+	ImageNiveauxGris i(fichierOuv);
+	i.sauverDansFichierPGM(fichierFerm);
+
+	
+	
     return 0;
 }
 

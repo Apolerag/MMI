@@ -8,49 +8,36 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 
     int temp ;
     std::ifstream fichier;
-    // vérifier extension PGM
+    
+    std::string extension = nomFichierPGM.substr(nomFichierPGM.length() - 3, 3);
+    if((extension.compare("pgm") != 0) && (extension.compare("PGM") != 0)) {
+
+        std::cerr << "Le fichier image n'est pas au format PGM." << std::endl;
+        return;
+    }
+
     fichier.open(nomFichierPGM.c_str());
 
     if(fichier)
     {
-        std::string mode_encodage ;
-        fichier >> mode_encodage ;
-        std::cout << "mode_encodage "<<mode_encodage<<std::endl;
-      /*  if(mode_encodage.compare("P5") == 0) {
-            short int pixel = 0;
-          //  std::cerr << "Le fichier est encodé en binaire, impossible de le lire !" << std::endl;
-            fichier >> m_nbColonnes >> m_nbLignes >> m_niveauxIntensite;
-            m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
-            for(int i = 0; i < m_nbColonnes; i++) {
-                for(int j = 0; j < m_nbLignes; j++) {
-                    fichier >> pixel ;
+        std::string mode_encodage;
+        fichier >> mode_encodage;
 
-                   // std::cout << "p "<<pixel<<std::endl;
-                    
-                    
-                    m_tableauPixels.push_back(pixel);
-                       
-                    //std::cout<<temp<<std::endl;
-                }
-            }
-        }
-        else */if(mode_encodage.compare("P2") == 0) {
-           // std::cout << "comprend " <<mode_encodage<<std::endl;
+        if(mode_encodage.compare("P2") == 0) {
+            
             fichier >> m_nbColonnes >> m_nbLignes >> m_niveauxIntensite;
             m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
 
-            for(int i = 0; i < m_nbColonnes; i++) {
-                for(int j = 0; j < m_nbLignes; j++) {
+            for(int i = 0; i < m_nbLignes; i++) {
+                for(int j = 0; j < m_nbColonnes; j++) {
+                    
                     fichier >> temp ;
-          //  std::cout << "comprend " <<temp<<std::endl;
-                    //m_tableauPixels.push_back(temp);
-                    elementTableauPixels(j, i) = temp;
+                    elementTableauPixels(i, j) = temp;
                 }
             }
-        } else
-        {
+        } 
+        else
              std::cerr << "Mauvais format de fichier." << std::endl;
-        }
         
         fichier.close();
     }
@@ -74,25 +61,38 @@ const int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne) const
     return m_tableauPixels[ligne * m_nbColonnes + colonne];
 }
 
-void ImageNiveauxGris::sauverDansFichierPGM(const std::string & nomFichierPGM) const 
+void ImageNiveauxGris::sauverDansFichierPGM(std::string & nomFichierPGM) const 
 {
 
     std::ofstream fichier;
-    fichier.open((nomFichierPGM + ".pgm").c_str());
+    int compteur = 0;
+
+    std::string extension = nomFichierPGM.substr(nomFichierPGM.length() - 3, 3);
+    if((extension.compare("pgm") != 0) && (extension.compare("PGM") != 0))
+        nomFichierPGM = nomFichierPGM + ".pgm";
+
+    fichier.open(nomFichierPGM.c_str());
 
     if(fichier) {
 
-        fichier << "P2 \n" << m_nbColonnes <<" "
-            << m_nbLignes <<" "<< m_niveauxIntensite<<" \n";
-        for(int i = 0; i < m_nbColonnes; i++) {
-            for(int j = 0; j < m_nbLignes; j++) {
-                fichier << elementTableauPixels(j, i) <<" ";
+        fichier << "P2" << std::endl << m_nbColonnes << " " << m_nbLignes 
+            << " " << m_niveauxIntensite << std::endl;
+
+        for(int i = 0; i < m_nbLignes; i++) {
+            for(int j = 0; j < m_nbColonnes; j++) {
+
+                if(compteur == 70) {
+                    fichier << std::endl;
+                    compteur = 0;
+                }
+                fichier << elementTableauPixels(i, j) << " ";
+                compteur++;
             }
         }
 
         fichier.close();
     }
     else
-        std::cerr << "Impossible d'ouvrir le fichier pour écrire dedans." << std::endl;
+        std::cerr << "Impossible d'ouvrir le fichier pour y écrire." << std::endl;
 
 }

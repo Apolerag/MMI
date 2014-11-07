@@ -57,7 +57,7 @@ void Histogramme::sauverDansFichierTXT(const std::string & nomFichierTXT)
     	fichier.close();
     }
     else
-    	std::cerr << "Impossible d'ouvrir le fichier "<< nomFichierTXT <<"pour écrire dedans." << std::endl;
+    	std::cerr << "Impossible d'ouvrir le fichier "<< nomFichierTXT  <<"pour écrire dedans." << std::endl;
 }
 
 void Histogramme::lireDansFichierTXT    (const std::string & nomFichierTXT)

@@ -16,7 +16,7 @@ public:
 
     int & elementTableauPixels(int ligne, int colonne);
     const int & elementTableauPixels(int ligne, int colonne) const;
-    void sauverDansFichierPGM(const std::string & nomFichierPGM) const;
+    void sauverDansFichierPGM(std::string & nomFichierPGM) const;
 };
 
 #endif // IMAGENIVEAUXGRIS_H
