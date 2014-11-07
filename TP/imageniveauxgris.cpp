@@ -6,7 +6,8 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 {
     /** On considère pour le moment que le fichier ne contient pas de commentaires */
 
-    int temp ;
+    int temp = 0;
+    char t;
     std::ifstream fichier;
     
     std::string extension = nomFichierPGM.substr(nomFichierPGM.length() - 3, 3);
@@ -20,29 +21,41 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 
     if(fichier)
     {
-        std::string mode_encodage;
-        fichier >> mode_encodage;
+        fichier >> m_mode_encodage ;
+        fichier >> m_nbColonnes >> m_nbLignes >> m_niveauxIntensite;
+        m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
 
-        if(mode_encodage.compare("P2") == 0) {
-            
-            fichier >> m_nbColonnes >> m_nbLignes >> m_niveauxIntensite;
-            m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
-
-            for(int i = 0; i < m_nbLignes; i++) {
-                for(int j = 0; j < m_nbColonnes; j++) {
+        if(m_mode_encodage.compare("P5") == 0) {
+            for(int i = 0; i < m_nbColonnes; i++) {
+                for(int j = 0; j < m_nbLignes; j++) {
+                    fichier >> t ;
                     
+                    if(m_niveauxIntensite > 255) {
+                        char t2;
+                        fichier >> t2 ;
+
+                        elementTableauPixels(j, i) = t*256 + t2;
+                         std::cout <<t+256<<t2<<std::endl;  
+                   }
+                   else elementTableauPixels(j, i) = (int)t;
+                
+                }
+            }
+        }
+        else if(m_mode_encodage.compare("P2") == 0) {
+            
+            for(int i = 0; i < m_nbColonnes; i++) {
+                for(int j = 0; j < m_nbLignes; j++) {
                     fichier >> temp ;
-                    elementTableauPixels(i, j) = temp;
+                    elementTableauPixels(j, i) = temp;
                 }
             }
         } 
-        else
-             std::cerr << "Mauvais format de fichier." << std::endl;
-        
+        else std::cerr << "Mauvais format de fichier." << std::endl;
+
         fichier.close();
     }
-    else 
-        std::cerr << "Impossible d'ouvrir le fichier pour le lire." << std::endl;
+    else std::cerr << "Impossible d'ouvrir le fichier pour le lire." << std::endl;
 }
 
 ImageNiveauxGris::~ImageNiveauxGris()
@@ -65,28 +78,17 @@ void ImageNiveauxGris::sauverDansFichierPGM(std::string & nomFichierPGM) const
 {
 
     std::ofstream fichier;
-    int compteur = 0;
-
-    std::string extension = nomFichierPGM.substr(nomFichierPGM.length() - 3, 3);
-    if((extension.compare("pgm") != 0) && (extension.compare("PGM") != 0))
-        nomFichierPGM = nomFichierPGM + ".pgm";
-
-    fichier.open(nomFichierPGM.c_str());
+    fichier.open((nomFichierPGM).c_str());
 
     if(fichier) {
 
-        fichier << "P2" << std::endl << m_nbColonnes << " " << m_nbLignes 
-            << " " << m_niveauxIntensite << std::endl;
+        fichier << m_mode_encodage << " \n" << m_nbColonnes <<" "
+            << m_nbLignes <<"\n"<< m_niveauxIntensite<<" \n";
 
-        for(int i = 0; i < m_nbLignes; i++) {
-            for(int j = 0; j < m_nbColonnes; j++) {
-
-                if(compteur == 70) {
-                    fichier << std::endl;
-                    compteur = 0;
-                }
-                fichier << elementTableauPixels(i, j) << " ";
-                compteur++;
+        for(int i = 0; i < m_nbColonnes; i++) {
+            for(int j = 0; j < m_nbLignes; j++) {
+                if(m_mode_encodage.compare("P2") == 0) fichier << elementTableauPixels(j, i) <<" ";
+                else  fichier << (char)elementTableauPixels(j, i);
             }
         }
 
