@@ -21,9 +21,9 @@ int main(int argc, char* argv[])
 
 	if (argc > 2) i.sauverDansFichierPGM(out);
 
-	//Histogramme h = Histogramme();
-/*	h.lireDansFichierTXT("res.txt");
-	h.sauverDansFichierTXT("res.txt");	*/ 
+	Histogramme h = Histogramme();
+	h.lireDansFichierTXT("res.txt");
+	//h.sauverDansFichierTXT("res.txt");
     std::cout << "Hello World!" << std::endl;
     return 0;
 }
