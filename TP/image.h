@@ -13,7 +13,7 @@ protected:
 
 public:
     Image();
-    ~Image() = default;
+    ~Image();
 
     const int getNbColonnes() const;
     const int getNbLignes() const;

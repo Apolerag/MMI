@@ -3,6 +3,9 @@
 Image::Image() : m_nbColonnes(0), m_nbLignes(0), m_niveauxIntensite(0) 
 {}
 
+Image::~Image() 
+{}
+
 const int Image::getNbColonnes() const
 {
     return m_nbColonnes;
