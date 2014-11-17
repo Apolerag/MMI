@@ -30,14 +30,19 @@ int main(int argc, char* argv[])
 	*/
 
 	std::vector< std::complex<double> > pointsPourCalcul ;
-	pointsPourCalcul.push_back(std::complex<double>(-3, 1));
-	pointsPourCalcul.push_back(std::complex<double>(-2, -1));
-	pointsPourCalcul.push_back(std::complex<double>(-1, -2));
 	pointsPourCalcul.push_back(std::complex<double>(1, 1));
+	pointsPourCalcul.push_back(std::complex<double>(3, 1));
+	pointsPourCalcul.push_back(std::complex<double>(4, 2));
+	pointsPourCalcul.push_back(std::complex<double>(5, 3));
+	pointsPourCalcul.push_back(std::complex<double>(3, 5));
+	pointsPourCalcul.push_back(std::complex<double>(2, 3));
+	pointsPourCalcul.push_back(std::complex<double>(1, 3));
 	
 	Contour c = Contour(pointsPourCalcul);
 
-	for(int i = 0; i < 4; i++) {
+	std::cout << "N/2 = " << pointsPourCalcul.size()/2 << std::endl ;
+
+	for(int i = 0; i < pointsPourCalcul.size(); i++) {
 		std::cout << "Old : (" << pointsPourCalcul[i].real() << ","
 			<< pointsPourCalcul[i].imag() << "), TFD : (" 
 			<< c.elementTableauTFD(i).real() << ","

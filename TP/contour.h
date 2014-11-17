@@ -28,7 +28,8 @@ public:
 	
 	int indiceNegatif(int i) const;
 	void calculeTransformeeFourierDiscrete();
-	void calculeRecomposition();
+	void calculeTFDInverse();
+	void calculeFFT();
 
 };
 

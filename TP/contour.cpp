@@ -10,7 +10,7 @@ Contour::Contour(const std::vector< std::complex<double> > & tabComplexe)
 {
 	m_pointsComplexes = tabComplexe;
 	calculeTransformeeFourierDiscrete();
-	calculeRecomposition();
+	calculeTFDInverse();
 }
 
 Contour::~Contour()
@@ -59,32 +59,41 @@ int Contour::indiceNegatif(int i) const
 void Contour::calculeTransformeeFourierDiscrete()
 {
 	int N = m_pointsComplexes.size();
+	m_pointsTFD.resize(N);
 	int m, n;
 	std::complex<double> s_m;
 	std::complex<double> i(0, 1);
+	int borneMin = (N%2 == 0) ? -N/2 : -N/2 - 1;
 
-	for(m = -N/2; m < N/2; m++) {
+	for(m = borneMin; m < N/2; m++) {
 		s_m = 0;
 		for(n = 0; n < N; n++) {
 			s_m += m_pointsComplexes[n] * exp(-i * (2.f * M_PI * m * n / N));
 		}
 		s_m *= 1.f/N;
-		m_pointsTFD.push_back(s_m);
+		m_pointsTFD[indiceNegatif(m)] = s_m;
 	}
 }
 
-void Contour::calculeRecomposition()
+void Contour::calculeTFDInverse()
 {
 	int N = m_pointsComplexes.size();
+	m_pointsRecomposes.resize(N);
 	int m, n;
 	std::complex<double> s_n;
 	std::complex<double> i(0, 1);
+	int borneMin = (N%2 == 0) ? -N/2 : -N/2 - 1;
 
 	for(n = 0; n < N; n++) {
 		s_n = 0;
-		for(m = -N/2; m < N/2; m++) {
+		for(m = borneMin; m < N/2; m++) {
 			s_n += m_pointsTFD[indiceNegatif(m)] * exp(i * (2.f * M_PI * m * n / N));
 		}
-		m_pointsRecomposes.push_back(s_n);
+		m_pointsRecomposes[n] = s_n;
 	}
+}
+
+void Contour::calculeFFT()
+{
+	
 }
