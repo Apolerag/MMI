@@ -1,6 +1,7 @@
 #include "imageniveauxgris.h"
 #include <fstream>
 #include <iostream>
+#include <stdio.h>
 
 ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 {
@@ -29,7 +30,7 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
             for(int i = 0; i < m_nbColonnes; i++) {
                 for(int j = 0; j < m_nbLignes; j++) {
                     fichier >> t ;
-                    
+                    /*
                     if(m_niveauxIntensite > 255) {
                         char t2;
                         fichier >> t2 ;
@@ -38,7 +39,8 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
                          std::cout <<t+256<<t2<<std::endl;  
                    }
                    else elementTableauPixels(j, i) = (int)t;
-                
+                    */
+                    elementTableauPixels(j, i) = t-'0';
                 }
             }
         }

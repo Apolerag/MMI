@@ -18,7 +18,7 @@ public:
 	~Contour();
 
 	std::complex<double> & elementTableau(int i);
-	const std::complex<double> & elementTableau(int i) const;
+    const std::complex<double> & elementTableau(int i) const;
 
 	std::complex<double> & elementTableauTFD(int i);
 	const std::complex<double> & elementTableauTFD(int i) const;

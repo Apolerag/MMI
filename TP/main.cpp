@@ -9,26 +9,26 @@
 
 int main(int argc, char* argv[])
 {
-	/*
+
 	std::string in, out;
 	if (argc < 2)
 	{
-		std::cerr<< "usage: "<< argv[0] << " IMAGE [SAVE_PATH]\n";
-		return EXIT_FAILURE;
+        std::cerr<< "usage: "<< argv[0] << " IMAGE [SAVE_PATH]\n";
+        in = "/home/apolerag/Master2/MMI/TP/test.pgm";
 	}
+    else in = argv[1];
+    if (argc > 2) out = argv[2];
+    else out = "/home/apolerag/Master2/MMI/TP/res.pgm";
+    std::cout<<in <<std::endl;
+    ImageNiveauxGris im(in);
 
-	in = argv[1];
-	if (argc > 2) out = argv[2];
+    if (argc > 2) im.sauverDansFichierPGM(out);
 
-	ImageNiveauxGris i(in);
-
-	if (argc > 2) i.sauverDansFichierPGM(out);
-
-	Histogramme h = Histogramme();
-	h.lireDansFichierTXT("res.txt");
+    //Histogramme h = Histogramme();
+    //h.lireDansFichierTXT("res.txt");
 	//h.sauverDansFichierTXT("res.txt");
-	*/
 
+/*
 	std::vector< std::complex<double> > pointsPourCalcul ;
 	pointsPourCalcul.push_back(std::complex<double>(1, 1));
 	pointsPourCalcul.push_back(std::complex<double>(3, 1));
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 			<< c.elementTableauTFD(i).imag() << ") et new : (" 
 			<< c.elementTableauRecompose(i).real() << ","
 			<< c.elementTableauRecompose(i).imag() << ")" << std::endl ;
-	}
+    }*/
     return 0;
 }
 
