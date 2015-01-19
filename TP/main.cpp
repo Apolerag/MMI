@@ -11,22 +11,28 @@ int main(int argc, char* argv[])
 {
 
 	std::string in, out;
-	if (argc < 2)
-	{
-        std::cerr<< "usage: "<< argv[0] << " IMAGE [SAVE_PATH]\n";
-        in = "/home/apolerag/Master2/MMI/TP/test.pgm";
-	}
+    if (argc < 2)
+        in = "/home/apolerag/Master2/MMI/TP/barbara.ascii.pgm";
     else in = argv[1];
-    if (argc > 2) out = argv[2];
+
+    if (argc > 2)
+        out = argv[2];
     else out = "/home/apolerag/Master2/MMI/TP/res.pgm";
-    std::cout<<in <<std::endl;
+
+    std::cout<< in <<std::endl;
+    std::cout<< out <<std::endl;
     ImageNiveauxGris im(in);
 
-    if (argc > 2) im.sauverDansFichierPGM(out);
+   // ImageNiveauxGris im2(im);
 
-    //Histogramme h = Histogramme();
-    //h.lireDansFichierTXT("res.txt");
-	//h.sauverDansFichierTXT("res.txt");
+    //im2.sauverDansFichierPGM(out);
+
+    Histogramme h = Histogramme(im);
+    h.sauverDansFichierTXT("res.txt");
+
+   // h.lireDansFichierTXT("res.txt");
+
+    h.sauverDansFichierTXT();
 
 /*
 	std::vector< std::complex<double> > pointsPourCalcul ;
@@ -52,4 +58,3 @@ int main(int argc, char* argv[])
     }*/
     return 0;
 }
-

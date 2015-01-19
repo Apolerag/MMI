@@ -11,6 +11,7 @@ private:
 
 public:
     ImageNiveauxGris(const std::string & nomFichierPGM);
+    ImageNiveauxGris(const ImageNiveauxGris & image);
     ~ImageNiveauxGris();
 
 

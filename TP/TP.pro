@@ -2,6 +2,9 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += main.cpp \
     contour.cpp \
@@ -27,5 +30,7 @@ OTHER_FILES += \
     test.pgm \
     lena.pgm \
     res.pgm \
-    barbara.ascii.pgm
+    barbara.ascii.pgm \
+    res.txt \
+    histogramme.txt
 

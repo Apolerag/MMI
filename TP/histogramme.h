@@ -12,7 +12,7 @@ private:
 	std::vector<int> m_tableauDonnees;
 
 public:
-	Histogramme(const ImageNiveauxGris & img);
+    Histogramme(const ImageNiveauxGris & img);
 	Histogramme();
 	// Histogramme(const ImageCouleur & img); travailler sur la luminance
 	~Histogramme();

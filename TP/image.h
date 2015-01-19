@@ -7,17 +7,18 @@ class Image
 {
 protected:
 	std::string m_mode_encodage ; /** P2 ou P5 */
-    int m_nbColonnes ;
-    int m_nbLignes ;
-    int m_niveauxIntensite ;
+    unsigned int m_nbColonnes ;
+    unsigned int m_nbLignes ;
+    unsigned int m_niveauxIntensite ;
 
 public:
     Image();
     ~Image();
 
-    const int getNbColonnes() const;
-    const int getNbLignes() const;
-    const int getNiveauxIntensite() const;
+    const unsigned int getNbColonnes() const;
+    const unsigned int getNbLignes() const;
+    const unsigned int getNiveauxIntensite() const;
+    const std::string getModeEncodage() const;
 };
 
 #endif // IMAGE_H

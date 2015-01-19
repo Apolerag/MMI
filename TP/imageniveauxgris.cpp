@@ -27,8 +27,8 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
         m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
 
         if(m_mode_encodage.compare("P5") == 0) {
-            for(int i = 0; i < m_nbColonnes; i++) {
-                for(int j = 0; j < m_nbLignes; j++) {
+            for(unsigned int i = 0; i < m_nbColonnes; i++) {
+                for(unsigned int j = 0; j < m_nbLignes; j++) {
                     fichier >> t ;
                     /*
                     if(m_niveauxIntensite > 255) {
@@ -46,8 +46,8 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
         }
         else if(m_mode_encodage.compare("P2") == 0) {
             
-            for(int i = 0; i < m_nbColonnes; i++) {
-                for(int j = 0; j < m_nbLignes; j++) {
+            for(unsigned int i = 0; i < m_nbColonnes; i++) {
+                for(unsigned int j = 0; j < m_nbLignes; j++) {
                     fichier >> temp ;
                     elementTableauPixels(j, i) = temp;
                 }
@@ -57,7 +57,23 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 
         fichier.close();
     }
-    else std::cerr << "Impossible d'ouvrir le fichier pour le lire." << std::endl;
+    else std::cerr << "Impossible d'ouvrir le fichier "<<nomFichierPGM <<" pour le lire." << std::endl;
+}
+
+ImageNiveauxGris::ImageNiveauxGris(const ImageNiveauxGris & image)
+{
+    m_nbColonnes = image.getNbColonnes();
+    m_nbLignes = image.getNbLignes();
+    m_niveauxIntensite = image.getNiveauxIntensite();
+    m_mode_encodage = image.getModeEncodage();
+
+    m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
+
+    for(unsigned int i = 0; i < m_nbColonnes; i++) {
+        for(unsigned int j = 0; j < m_nbLignes; j++) {
+            elementTableauPixels(i,j) = image.elementTableauPixels(i,j);
+        }
+    }
 }
 
 ImageNiveauxGris::~ImageNiveauxGris()
@@ -87,8 +103,8 @@ void ImageNiveauxGris::sauverDansFichierPGM(std::string & nomFichierPGM) const
         fichier << m_mode_encodage << " \n" << m_nbColonnes <<" "
             << m_nbLignes <<"\n"<< m_niveauxIntensite<<" \n";
 
-        for(int i = 0; i < m_nbColonnes; i++) {
-            for(int j = 0; j < m_nbLignes; j++) {
+        for(unsigned int i = 0; i < m_nbColonnes; i++) {
+            for(unsigned int j = 0; j < m_nbLignes; j++) {
                 if(m_mode_encodage.compare("P2") == 0) fichier << elementTableauPixels(j, i) <<" ";
                 else  fichier << (char)elementTableauPixels(j, i);
             }
@@ -97,6 +113,6 @@ void ImageNiveauxGris::sauverDansFichierPGM(std::string & nomFichierPGM) const
         fichier.close();
     }
     else
-        std::cerr << "Impossible d'ouvrir le fichier pour y écrire." << std::endl;
+        std::cerr << "Impossible d'ouvrir le fichier "<<nomFichierPGM << " pour y écrire." << std::endl;
 
 }

@@ -5,16 +5,13 @@
 
 Histogramme::Histogramme(const ImageNiveauxGris & img)
 {
-	m_tableauDonnees.resize(img.getNiveauxIntensite());
-
-	for(unsigned int i = 0; i < m_tableauDonnees.size(); i++)
-		m_tableauDonnees[i] = 0;
+    m_tableauDonnees.resize(img.getNiveauxIntensite()+1,0);
 
 	for(int i = 0; i < img.getNbColonnes(); i++) {
-		for(int j = 0; j < img.getNbLignes(); j++) {
-			m_tableauDonnees[img.elementTableauPixels(i,j)]++;
+        for(int j = 0; j < img.getNbLignes(); j++) {
+            m_tableauDonnees[img.elementTableauPixels(j,i)]++;
 		}
-	}
+    }
 
 }
 
@@ -48,7 +45,7 @@ void Histogramme::sauverDansFichierTXT(const std::string & nomFichierTXT)
 
     if(fichier) {
 
-    	fichier << "# Histogramme sur " << m_tableauDonnees.size() << " niveaux d'intensite" << std::endl;
+        fichier << "# Histogramme sur " << m_tableauDonnees.size()-1 << " niveaux d'intensité" << std::endl;
     	fichier << "# Intensite / Compte" << std::endl;
 
     	for(unsigned int i = 0; i < m_tableauDonnees.size(); i++)
@@ -60,7 +57,7 @@ void Histogramme::sauverDansFichierTXT(const std::string & nomFichierTXT)
     	std::cerr << "Impossible d'ouvrir le fichier "<< nomFichierTXT  <<"pour écrire dedans." << std::endl;
 }
 
-void Histogramme::lireDansFichierTXT    (const std::string & nomFichierTXT)
+void Histogramme::lireDansFichierTXT(const std::string & nomFichierTXT)
 {
 	std::ifstream fichier;
     fichier.open(nomFichierTXT.c_str());
@@ -70,7 +67,7 @@ void Histogramme::lireDansFichierTXT    (const std::string & nomFichierTXT)
         int taille = 0;
         std::string s;
         fichier >> s >> s >> s >> taille;
-        m_tableauDonnees.resize(taille);
+        m_tableauDonnees.resize(taille+1);
     	for (unsigned int i = 0; i < m_tableauDonnees.size(); ++i)
     	{
     		fichier >> i  >> m_tableauDonnees[i] ;
@@ -79,5 +76,5 @@ void Histogramme::lireDansFichierTXT    (const std::string & nomFichierTXT)
         fichier.close();
     }
     else 
-        std::cerr << "Impossible d'ouvrir le fichier pour le lire." << std::endl;
+        std::cerr << "Impossible d'ouvrir le fichier"<<nomFichierTXT <<"pour le lire." << std::endl;
 }
