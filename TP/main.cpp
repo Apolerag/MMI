@@ -6,6 +6,7 @@
 #include "contour.h"
 #include "imageniveauxgris.h"
 #include "histogramme.h"
+#include "fonctionsCorrespondance.h"
 
 int main(int argc, char* argv[])
 {
@@ -19,20 +20,25 @@ int main(int argc, char* argv[])
         out = argv[2];
     else out = "/home/apolerag/Master2/MMI/TP/res.pgm";
 
-    std::cout<< in <<std::endl;
-    std::cout<< out <<std::endl;
     ImageNiveauxGris im(in);
 
    // ImageNiveauxGris im2(im);
 
     //im2.sauverDansFichierPGM(out);
 
-    Histogramme h = Histogramme(im);
-    h.sauverDansFichierTXT("res.txt");
+   // Histogramme h = Histogramme(im);
+   // h.sauverDansFichierTXT("res.txt");
 
    // h.lireDansFichierTXT("res.txt");
 
-    h.sauverDansFichierTXT();
+   // h.sauverDansFichierTXT();
+
+    fonctionsCorrespondance f(im);
+
+    ImageNiveauxGris res = f.translationNegative(50);
+
+
+    res.sauverDansFichierPGM(out);
 
 /*
 	std::vector< std::complex<double> > pointsPourCalcul ;

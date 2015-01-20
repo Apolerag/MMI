@@ -9,7 +9,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 SOURCES += main.cpp \
     contour.cpp \
     filtre.cpp \
-    fonctionCorrespondance.cpp \
+    fonctionsCorrespondance.cpp \
     histogramme.cpp \
     image.cpp \
     imagecouleur.cpp \
@@ -19,7 +19,7 @@ SOURCES += main.cpp \
 HEADERS += \
     contour.h \
     filtre.h \
-    fonctionCorrespondance.h \
+    fonctionsCorrespondance.h \
     histogramme.h \
     image.h \
     imagecouleur.h \
