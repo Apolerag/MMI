@@ -13,29 +13,27 @@ int main(int argc, char* argv[])
 
 	std::string in, out;
     if (argc < 2)
-        in = "/home/apolerag/Master2/MMI/TP/barbara.ascii.pgm";
+        in = "/home/apolerag/Master2/MMI/TP/lena.ascii.pgm";
     else in = argv[1];
 
     if (argc > 2)
         out = argv[2];
     else out = "/home/apolerag/Master2/MMI/TP/res.pgm";
 
-    ImageNiveauxGris im(in);
+   ImageNiveauxGris im(in);
 
-   // ImageNiveauxGris im2(im);
+    ImageNiveauxGris im2(im);
 
-    //im2.sauverDansFichierPGM(out);
+    im2.sauverDansFichierPGM(out);
 
-   // Histogramme h = Histogramme(im);
-   // h.sauverDansFichierTXT("res.txt");
+    Histogramme h = Histogramme(im);
+    h.sauverDansFichierTXT("res.txt");
+    h.lireDansFichierTXT("res.txt");
+    h.sauverDansFichierTXT();
 
-   // h.lireDansFichierTXT("res.txt");
+   fonctionsCorrespondance f(im);
 
-   // h.sauverDansFichierTXT();
-
-    fonctionsCorrespondance f(im);
-
-    ImageNiveauxGris res = f.translationNegative(50);
+   ImageNiveauxGris res = f.recadrage(24,230);
 
 
     res.sauverDansFichierPGM(out);

@@ -3,12 +3,19 @@
 #include <iostream>
 #include <stdio.h>
 
+
+ImageNiveauxGris::ImageNiveauxGris(const int nbColonnes, const int nbLignes, const int niveauIntensite, const std::string & modeEncodage):
+Image(nbColonnes,nbLignes,niveauIntensite,modeEncodage)
+{
+    m_tableauPixels.resize(m_nbColonnes * m_nbLignes,0);
+}
+
 ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
 {
     /** On considère pour le moment que le fichier ne contient pas de commentaires */
 
     int temp = 0;
-    char t;
+    //char t;
     std::ifstream fichier;
     
     std::string extension = nomFichierPGM.substr(nomFichierPGM.length() - 3, 3);
@@ -24,13 +31,13 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
     {
         fichier >> m_mode_encodage ;
         fichier >> m_nbColonnes >> m_nbLignes >> m_niveauxIntensite;
-        m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
+        m_tableauPixels.resize(m_nbColonnes * m_nbLignes,0  );
 
-        if(m_mode_encodage.compare("P5") == 0) {
+        /*if(m_mode_encodage.compare("P5") == 0) {
             for(unsigned int i = 0; i < m_nbColonnes; i++) {
                 for(unsigned int j = 0; j < m_nbLignes; j++) {
                     fichier >> t ;
-                    /*
+
                     if(m_niveauxIntensite > 255) {
                         char t2;
                         fichier >> t2 ;
@@ -39,12 +46,12 @@ ImageNiveauxGris::ImageNiveauxGris(const std::string & nomFichierPGM)
                          std::cout <<t+256<<t2<<std::endl;  
                    }
                    else elementTableauPixels(j, i) = (int)t;
-                    */
+
                     elementTableauPixels(j, i) = t-'0';
                 }
             }
         }
-        else if(m_mode_encodage.compare("P2") == 0) {
+        else */if(m_mode_encodage.compare("P2") == 0) {
             
             for(unsigned int i = 0; i < m_nbColonnes; i++) {
                 for(unsigned int j = 0; j < m_nbLignes; j++) {

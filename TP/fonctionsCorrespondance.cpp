@@ -11,11 +11,11 @@ fonctionsCorrespondance::~fonctionsCorrespondance()
 
 ImageNiveauxGris fonctionsCorrespondance::negatif()
 {
-    ImageNiveauxGris res(m_image);
+    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
-            res.elementTableauPixels(j,i) = res.getNiveauxIntensite() - res.elementTableauPixels(j,i);
+            res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite() - m_image.elementTableauPixels(j,i);
         }
     }
 
@@ -24,12 +24,12 @@ ImageNiveauxGris fonctionsCorrespondance::negatif()
 
 ImageNiveauxGris fonctionsCorrespondance::seuillage(const unsigned int seuil)
 {
-    ImageNiveauxGris res(m_image);
+    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
-            if(res.elementTableauPixels(j,i) > seuil)
-                res.elementTableauPixels(j,i) = res.getNiveauxIntensite();
+            if(m_image.elementTableauPixels(j,i) > seuil)
+                res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite();
             else res.elementTableauPixels(j,i) = 0;
         }
     }
@@ -39,13 +39,13 @@ ImageNiveauxGris fonctionsCorrespondance::seuillage(const unsigned int seuil)
 
 ImageNiveauxGris fonctionsCorrespondance::translationPositive(const unsigned int pas)
 {
-    ImageNiveauxGris res(m_image);
+    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
-                res.elementTableauPixels(j,i) += pas;
-                if(res.elementTableauPixels(j,i) > res.getNiveauxIntensite())
-                    res.elementTableauPixels(j,i) = res.getNiveauxIntensite();
+                if(m_image.elementTableauPixels(j,i) + pas > m_image.getNiveauxIntensite())
+                    res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite();
+                else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i) + pas;
         }
     }
 
@@ -54,14 +54,34 @@ ImageNiveauxGris fonctionsCorrespondance::translationPositive(const unsigned int
 
 ImageNiveauxGris fonctionsCorrespondance::translationNegative(const unsigned int pas)
 {
-    ImageNiveauxGris res(m_image);
+    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
-                if(res.elementTableauPixels(j,i) < pas){
+                if(m_image.elementTableauPixels(j,i) < pas){
                     res.elementTableauPixels(j,i) = 0;
                 }
-                else res.elementTableauPixels(j,i) -= pas;
+                else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i) - pas;
+        }
+    }
+
+    return res;
+}
+
+ImageNiveauxGris fonctionsCorrespondance::recadrage(const unsigned int min, const unsigned int max)
+{
+    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+
+    for(int i = 0; i < res.getNbColonnes(); i++) {
+        for(int j = 0; j < res.getNbLignes(); j++) {
+                if(m_image.elementTableauPixels(j,i) < min){
+                    res.elementTableauPixels(j,i) = 0;
+                }
+                else if(m_image.elementTableauPixels(j,i) > max){
+                    res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite()
+                            ;
+                }
+                else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i);
         }
     }
 

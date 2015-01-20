@@ -13,6 +13,7 @@ protected:
 
 public:
     Image();
+    Image(const int nbColonnes, const int nbLignes, const int niveauIntensite, const std::string & modeEncodage);
     ~Image();
 
     const unsigned int getNbColonnes() const;

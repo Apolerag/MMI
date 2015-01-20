@@ -10,6 +10,7 @@ private:
     std::vector<int> m_tableauPixels;
 
 public:
+    ImageNiveauxGris(const int nbColonnes, const int nbLignes, const int niveauIntensite, const std::string & modeEncodage);
     ImageNiveauxGris(const std::string & nomFichierPGM);
     ImageNiveauxGris(const ImageNiveauxGris & image);
     ~ImageNiveauxGris();

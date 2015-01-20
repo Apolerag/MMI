@@ -29,6 +29,7 @@ HEADERS += \
 OTHER_FILES += \
     test.pgm \
     lena.pgm \
+    lena.ascii.pgm \
     res.pgm \
     barbara.ascii.pgm \
     res.txt \

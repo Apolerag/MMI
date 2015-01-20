@@ -18,6 +18,7 @@ public:
     ImageNiveauxGris seuillage(const unsigned int seuil);
     ImageNiveauxGris translationPositive(const unsigned int pas);
     ImageNiveauxGris translationNegative(const unsigned int pas);
+    ImageNiveauxGris recadrage(const unsigned int min, const unsigned int max);
 };
 
 #endif
