@@ -22,21 +22,20 @@ int main(int argc, char* argv[])
 
    ImageNiveauxGris im(in);
 
-    ImageNiveauxGris im2(im);
+   /* ImageNiveauxGris im2(im);
 
-    im2.sauverDansFichierPGM(out);
-
-    Histogramme h = Histogramme(im);
-    h.sauverDansFichierTXT("res.txt");
-    h.lireDansFichierTXT("res.txt");
-    h.sauverDansFichierTXT();
+    im2.sauverDansFichierPGM(out);*/
 
    fonctionsCorrespondance f(im);
 
-   ImageNiveauxGris res = f.recadrage(24,230);
+    ImageNiveauxGris res = f.recadrage(20,230);
+   //ImageNiveauxGris res(im);
 
-
-    res.sauverDansFichierPGM(out);
+   Histogramme h = Histogramme(res);
+   h.sauverDansFichierTXT("res.txt");
+   h.lireDansFichierTXT("res.txt");
+   h.sauverDansFichierTXT();
+   res.sauverDansFichierPGM(out);
 
 /*
 	std::vector< std::complex<double> > pointsPourCalcul ;

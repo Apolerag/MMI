@@ -9,7 +9,7 @@ class fonctionsCorrespondance
 protected:
     ImageNiveauxGris m_image;
     Histogramme m_histogramme;
-
+    std::vector<int> m_fonction;
 public:
     fonctionsCorrespondance(const ImageNiveauxGris & im);
     ~fonctionsCorrespondance();
