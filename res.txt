@@ -1,0 +1,18 @@
+# Histogramme sur 15 niveaux d'intensité
+# Intensite / Compte
+0 120
+1 0
+2 0
+3 10
+4 0
+5 0
+6 0
+7 13
+8 0
+9 0
+10 0
+11 13
+12 0
+13 0
+14 0
+15 12
