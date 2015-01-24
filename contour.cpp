@@ -99,7 +99,8 @@ void Contour::calculeFFT()
 	//copie du tableau complexes en paramettre 
 }
 
-std::vector< std::complex<double> > Contour::calculeFFTrec(const std::vector< std::complex<double> > & points)
+std::vector< std::complex<double> > Contour::calculeFFTrec(const 
+	std::vector< std::complex<double> > & points)
 {
 	if(points.size() == 1) {
 		return points;
@@ -114,18 +115,17 @@ std::vector< std::complex<double> > Contour::calculeFFTrec(const std::vector< st
 			else
 				deuxiemePartie.push_back(points[i]);
 		}
-		std::cout << "M/2 = " << M/2 << " et size tab = " << premierePartie.size() 
-			<< std::endl;
 
 		/** Récursion sur la première partie **/
 		calculeFFTrec(premierePartie);
 		/** récursion sur la deuxième partie **/
-		calculeFFTrec(deuxièmePartie);
+		calculeFFTrec(deuxiemePartie);
 
 		/** Fusion **/
 		std::vector< std::complex<double> > retour;
 		retour.resize(points.size());
 
+		return retour;
 	}
 }
 

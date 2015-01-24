@@ -23,6 +23,4 @@ public:
 	void lireDansFichierTXT(const std::string & nomFichierTXT);
 };
 
-// FAIRE MEAN SHIFT
-
 #endif

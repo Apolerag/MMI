@@ -31,7 +31,8 @@ public:
 	void calculeTransformeeFourierDiscrete();
 	void calculeTFDInverse();
 	void calculeFFT();
-	std::vector< std::complex<double> > calculeFFTrec(int M);
+	std::vector< std::complex<double> > calculeFFTrec(const 
+		std::vector< std::complex<double> > & points);
 
 };
 
