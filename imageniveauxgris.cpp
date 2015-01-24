@@ -78,7 +78,7 @@ ImageNiveauxGris::ImageNiveauxGris(const ImageNiveauxGris & image)
 
     for(unsigned int i = 0; i < m_nbColonnes; i++) {
         for(unsigned int j = 0; j < m_nbLignes; j++) {
-            elementTableauPixels(i,j) = image.elementTableauPixels(i,j);
+            elementTableauPixels(j,i) = image.elementTableauPixels(j,i);
         }
     }
 }

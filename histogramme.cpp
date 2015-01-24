@@ -7,11 +7,11 @@ Histogramme::Histogramme(const ImageNiveauxGris & img)
 {
     m_tableauDonnees.resize(img.getNiveauxIntensite()+1,0);
 
-    /*for(int i = 0; i < img.getNbColonnes(); i++) {
+    for(int i = 0; i < img.getNbColonnes(); i++) {
         for(int j = 0; j < img.getNbLignes(); j++) {
             m_tableauDonnees[img.elementTableauPixels(j,i)]++;
 		}
-    }*/
+    }
 
 }
 

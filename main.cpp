@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 
     im2.sauverDansFichierPGM(out);*/
 
-  // FonctionsCorrespondance f(im);
+  FonctionsCorrespondance f(im);
 
    // ImageNiveauxGris res = f.recadrage(20,230);
    //ImageNiveauxGris res(im);
