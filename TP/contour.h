@@ -11,6 +11,7 @@ private:
 	std::vector< std::complex<double> > m_pointsComplexes;
 	std::vector< std::complex<double> > m_pointsTFD;
 	std::vector< std::complex<double> > m_pointsRecomposes;
+	std::vector< std::complex<double> > m_pointsFFT;
 
 public:
 	Contour();
@@ -30,6 +31,7 @@ public:
 	void calculeTransformeeFourierDiscrete();
 	void calculeTFDInverse();
 	void calculeFFT();
+	std::vector< std::complex<double> > calculeFFTrec(int M);
 
 };
 
