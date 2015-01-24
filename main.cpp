@@ -28,12 +28,15 @@ int main(int argc, char* argv[])
 
   FonctionsCorrespondance f(im);
 
-   // ImageNiveauxGris res = f.recadrage(20,230);
+  ImageNiveauxGris res = f.egalisationHistogramme();
    //ImageNiveauxGris res(im);
+
  	Histogramme h = Histogramme(im);
+	h.sauverDansFichierTXT("im.txt");
+ 	h = Histogramme(res);
 	h.sauverDansFichierTXT("res.txt");
 
-   im.sauverDansFichierPGM(out);
+   res.sauverDansFichierPGM(out);
 
 /*
 	std::vector< std::complex<double> > pointsPourCalcul ;

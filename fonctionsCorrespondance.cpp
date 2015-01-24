@@ -1,7 +1,7 @@
 #include "fonctionsCorrespondance.h"
 #include <iostream>
 
-FonctionsCorrespondance::FonctionsCorrespondance(const ImageNiveauxGris &im): m_image(im)
+FonctionsCorrespondance::FonctionsCorrespondance(const ImageNiveauxGris &im): m_image(im), m_histogramme(im)
 {
     m_fonction.resize(m_image.getNiveauxIntensite(),0);
 }
@@ -74,7 +74,7 @@ ImageNiveauxGris FonctionsCorrespondance::recadrage(const unsigned int min, cons
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
-    for(unsigned int i =0; i < m_fonction.size(); i++){
+    for(unsigned int i = 0; i < m_fonction.size(); i++){
         if(i <= min ){
             m_fonction[i] = 0;
         }
@@ -94,3 +94,26 @@ ImageNiveauxGris FonctionsCorrespondance::recadrage(const unsigned int min, cons
 
     return res;
 }
+
+
+ImageNiveauxGris FonctionsCorrespondance::egalisationHistogramme()
+ {
+    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+
+    for(unsigned int i = 0; i < m_fonction.size(); i++){
+        m_fonction[i] = m_image.getNiveauxIntensite()*m_histogramme.getCumule(i)/(m_image.getNbColonnes()*m_image.getNbLignes());
+    }
+
+    for(unsigned int i = 0; i < m_fonction.size(); i++){
+        std::cout << m_fonction[i] <<" ";
+    }
+    std::cout<<std::endl;
+
+    for(unsigned int i = 0; i < res.getNbColonnes(); i++) {
+        for(unsigned int j = 0; j < res.getNbLignes(); j++) {
+                res.elementTableauPixels(j,i) = m_fonction[m_image.elementTableauPixels(j,i)];
+        }
+    }
+
+    return res;
+ }

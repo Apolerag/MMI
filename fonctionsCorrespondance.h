@@ -9,6 +9,7 @@ class FonctionsCorrespondance
 protected:
     ImageNiveauxGris m_image;
     std::vector<int> m_fonction;
+    Histogramme m_histogramme;
 public:
     FonctionsCorrespondance(const ImageNiveauxGris & im);
     ~FonctionsCorrespondance();
@@ -18,6 +19,7 @@ public:
     ImageNiveauxGris translationPositive(const unsigned int pas);
     ImageNiveauxGris translationNegative(const unsigned int pas);
     ImageNiveauxGris recadrage(const unsigned int min, const unsigned int max);
+    ImageNiveauxGris egalisationHistogramme();
 };
 
 #endif
