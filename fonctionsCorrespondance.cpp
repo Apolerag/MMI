@@ -1,17 +1,17 @@
 #include "fonctionsCorrespondance.h"
 #include <iostream>
 
-fonctionsCorrespondance::fonctionsCorrespondance(const ImageNiveauxGris &im): m_image(im), m_histogramme(im)
+FonctionsCorrespondance::FonctionsCorrespondance(const ImageNiveauxGris &im): m_image(im)
 {
     m_fonction.resize(m_image.getNiveauxIntensite(),0);
 }
 
-fonctionsCorrespondance::~fonctionsCorrespondance()
+FonctionsCorrespondance::~FonctionsCorrespondance()
 {
     std::vector<int>().swap(m_fonction);
 }
 
-ImageNiveauxGris fonctionsCorrespondance::negatif()
+ImageNiveauxGris FonctionsCorrespondance::negatif()
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
@@ -24,7 +24,7 @@ ImageNiveauxGris fonctionsCorrespondance::negatif()
     return res;
 }
 
-ImageNiveauxGris fonctionsCorrespondance::seuillage(const unsigned int seuil)
+ImageNiveauxGris FonctionsCorrespondance::seuillage(const unsigned int seuil)
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
@@ -39,7 +39,7 @@ ImageNiveauxGris fonctionsCorrespondance::seuillage(const unsigned int seuil)
     return res;
 }
 
-ImageNiveauxGris fonctionsCorrespondance::translationPositive(const unsigned int pas)
+ImageNiveauxGris FonctionsCorrespondance::translationPositive(const unsigned int pas)
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
@@ -54,7 +54,7 @@ ImageNiveauxGris fonctionsCorrespondance::translationPositive(const unsigned int
     return res;
 }
 
-ImageNiveauxGris fonctionsCorrespondance::translationNegative(const unsigned int pas)
+ImageNiveauxGris FonctionsCorrespondance::translationNegative(const unsigned int pas)
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
@@ -70,7 +70,7 @@ ImageNiveauxGris fonctionsCorrespondance::translationNegative(const unsigned int
     return res;
 }
 
-ImageNiveauxGris fonctionsCorrespondance::recadrage(const unsigned int min, const unsigned int max)
+ImageNiveauxGris FonctionsCorrespondance::recadrage(const unsigned int min, const unsigned int max)
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
@@ -86,29 +86,11 @@ ImageNiveauxGris fonctionsCorrespondance::recadrage(const unsigned int min, cons
         }
     }
 
-    for(unsigned int i =0; i < m_fonction.size(); i++){
-        std::cout<<m_fonction[i]<<" ";
-    }
-    std::cout<<std::endl;
-
     for(unsigned int i = 0; i < res.getNbColonnes(); i++) {
         for(unsigned int j = 0; j < res.getNbLignes(); j++) {
-                /*if(m_image.elementTableauPixels(j,i) < min){
-                    res.elementTableauPixels(j,i) = 0;
-                }
-                else if(m_image.elementTableauPixels(j,i) > max){
-                    res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite();
-                }
-                else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i);*/
-                //sstd::cout<<m_image.elementTableauPixels(j,i)<<" ";
                 res.elementTableauPixels(j,i) = m_fonction[m_image.elementTableauPixels(j,i)];
-
         }
     }
-     std::cout<<std::endl;
-/*
-    Histogramme h = Histogramme(res);
-    h.sauverDansFichierTXT("res_recadrage.txt");
-*/
+
     return res;
 }

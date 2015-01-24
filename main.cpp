@@ -13,29 +13,27 @@ int main(int argc, char* argv[])
 
 	std::string in, out;
     if (argc < 2)
-        in = "/home/apolerag/Master2/MMI/TP/lena.ascii.pgm";
+        in = "Image/lena.ascii.pgm";
     else in = argv[1];
 
     if (argc > 2)
         out = argv[2];
-    else out = "/home/apolerag/Master2/MMI/TP/res.pgm";
+    else out = "Image/res.pgm";
 
    ImageNiveauxGris im(in);
 
-   /* ImageNiveauxGris im2(im);
+    /*ImageNiveauxGris im2(im);
 
     im2.sauverDansFichierPGM(out);*/
 
-   fonctionsCorrespondance f(im);
+  // FonctionsCorrespondance f(im);
 
-    ImageNiveauxGris res = f.recadrage(20,230);
+   // ImageNiveauxGris res = f.recadrage(20,230);
    //ImageNiveauxGris res(im);
+ 	Histogramme h = Histogramme(im);
+	h.sauverDansFichierTXT("res.txt");
 
-   Histogramme h = Histogramme(res);
-   h.sauverDansFichierTXT("res.txt");
-   h.lireDansFichierTXT("res.txt");
-   h.sauverDansFichierTXT();
-   res.sauverDansFichierPGM(out);
+   im.sauverDansFichierPGM(out);
 
 /*
 	std::vector< std::complex<double> > pointsPourCalcul ;

@@ -4,15 +4,14 @@
 #include "image.h"
 #include "histogramme.h"
 
-class fonctionsCorrespondance
+class FonctionsCorrespondance
 {
 protected:
     ImageNiveauxGris m_image;
-    Histogramme m_histogramme;
     std::vector<int> m_fonction;
 public:
-    fonctionsCorrespondance(const ImageNiveauxGris & im);
-    ~fonctionsCorrespondance();
+    FonctionsCorrespondance(const ImageNiveauxGris & im);
+    ~FonctionsCorrespondance();
 
     ImageNiveauxGris negatif();
     ImageNiveauxGris seuillage(const unsigned int seuil);
