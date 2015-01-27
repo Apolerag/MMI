@@ -257,3 +257,15 @@ Image Fourier::getImageFourier() {
 	}
 	return img;
 }
+
+Image Fourier::getImageApresFourierInverse() {
+
+	std::vector<std::complex<double> > inverse = calculeFourierRapideInverse();
+	Image img(m_dataWidth, m_dataHeight, 255, "P2");
+	img.m_tableauPixels.resize(inverse.size());
+
+	for(int i = 0; i < inverse.size(); i++) {
+		img.m_tableauPixels[i] = inverse[i].real();
+	}
+	return img;
+}

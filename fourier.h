@@ -135,6 +135,7 @@ public:
 	 * @return Une Image 
 	 */
 	Image getImageFourier();
+	Image getImageApresFourierInverse();
 
 };
 

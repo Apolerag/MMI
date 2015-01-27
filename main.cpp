@@ -47,7 +47,9 @@ int main(int argc, char* argv[])
 	//filtre.passeHautIdeal(10);
 
 	Image fourierCentre = f.getImageFourier();
+	Image retour = f.getImageApresFourierInverse();
 	fourierCentre.sauverDansFichierPGM(out);
+	retour.sauverDansFichierPGM(out2);
 
 
 
