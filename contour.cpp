@@ -19,6 +19,10 @@ int Contour::getDataSize() const {
 	return m_data.size();
 }
 
+std::vector<std::complex<double> > Contour::getData() const {
+	return m_data;
+}
+
 std::complex<double> Contour::operator()(const int i) const {
 	
 	assert(i >= 0 && i < m_data.size());

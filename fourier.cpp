@@ -2,56 +2,53 @@
 
 #include <iostream>
 
-Fourier::Fourier() : m_dataSize(0) {
+Fourier::Fourier() : m_dataWidth(0), m_dataHeight(0) {
 
 }
 
 Fourier::~Fourier() {
 
-	std::vector< std::complex<double> >().swap(m_fourierDiscrete);
-	std::vector< std::complex<double> >().swap(m_fourierRapide);
+	std::vector< std::complex<double> >().swap(m_fourier);
 }
 
-int Fourier::indiceDecale(int i) const {
+int Fourier::indiceDecale(int i, int size) const {
 
-	int indice = (i >= 0) ?  i : m_dataSize + i;
+	int indice = (i >= 0) ?  i : size + i;
 	return indice;
 }
 
 void Fourier::calculeFourierDiscrete(const Contour & contour) {
 	
-	m_dataSize = contour.getDataSize();
-	m_fourierDiscrete.resize(m_dataSize);
+	m_dataWidth = contour.getDataSize();
+	m_fourier.resize(m_dataWidth);
 
 	std::complex<double> s_m, i(0, 1);
-	int m, n, borneMin = -m_dataSize/2 - ((m_dataSize%2 == 0)? 0 : 1);
+	int m, n, borneMin = -m_dataWidth/2 - ((m_dataWidth%2 == 0)? 0 : 1);
 
-	std::cout << "m_dataSize = " << m_dataSize << std::endl;
-	for(m = borneMin; m < m_dataSize/2; m++) {
+	for(m = borneMin; m < m_dataWidth/2; m++) {
 		s_m = 0;
-		for(n = 0; n < m_dataSize; n++) {
-			s_m += contour(n) * exp(-i * (2.f * M_PI * m * n / m_dataSize));
+		for(n = 0; n < m_dataWidth; n++) {
+			s_m += contour(n) * exp(-i * (2.f * M_PI * m * n / m_dataWidth));
 		}
-		s_m *= 1.f/m_dataSize;
-		std::cout << " m = " << m << " / " << indiceDecale(m) << std::endl;
-		m_fourierDiscrete[indiceDecale(m)] = s_m;
+		s_m *= 1.f/m_dataWidth;
+		m_fourier[indiceDecale(m, m_dataWidth)] = s_m;
 	}
 }
 
-std::vector< std::complex<double> > Fourier::calculeFourierDiscreteInverseContour() const {
+std::vector< std::complex<double> > Fourier::calculeFourierInverse() const {
 
 	std::vector< std::complex<double> > inverse;
-	inverse.resize(m_dataSize);
+	inverse.resize(m_dataWidth);
 
 
 	std::complex<double> s_n, i(0, 1);
-	int m, n, borneMin = -m_dataSize/2 - ((m_dataSize%2 == 0)? 0 : 1);
+	int m, n, borneMin = -m_dataWidth/2 - ((m_dataWidth%2 == 0)? 0 : 1);
 
-	for(n = 0; n < m_dataSize; n++) {
+	for(n = 0; n < m_dataWidth; n++) {
 		s_n = 0;
-		for(m = borneMin; m < m_dataSize/2; m++) {
-			s_n += m_fourierDiscrete[indiceDecale(m)] 
-				* exp(i * (2.f * M_PI * m * n / m_dataSize));
+		for(m = borneMin; m < m_dataWidth/2; m++) {
+			s_n += m_fourier[indiceDecale(m, m_dataWidth)] 
+				* exp(i * (2.f * M_PI * m * n / m_dataWidth));
 		}
 		inverse[n] = s_n;
 	}
@@ -59,42 +56,153 @@ std::vector< std::complex<double> > Fourier::calculeFourierDiscreteInverseContou
 	return inverse;
 }
 
-/*
+void Fourier::calculeFourierRapide(const Contour & contour) {
 
-// Extension des contours aux images 2D 
-void Contour::calculeFFT()
-{
-	//copie du tableau complexes en paramettre 
+	m_dataWidth = contour.getDataSize();
+	m_dataHeight = 1;
+
+	std::vector<std::complex<double> > data = contour.getData();
+	m_fourier = calculeFourierRapideLigne(data, false);
+
+	for(int i = 0; i < m_fourier.size(); i++) {
+		m_fourier[i].real() /= m_fourier.size();
+		m_fourier[i].imag() /= m_fourier.size();
+	}
 }
 
-std::vector< std::complex<double> > Contour::calculeFFTrec(const 
-	std::vector< std::complex<double> > & points)
-{
-	if(points.size() == 1) {
-		return points;
-	}
-	else {
-		// Division en deux tableaux
-		std::vector< std::complex<double> > premierePartie;
-		std::vector< std::complex<double> > deuxiemePartie;
-		for(int i = 0; i < points.size(); i++) {
-			if((i % 2) == 0)
-				premierePartie.push_back(points[i]);
-			else
-				deuxiemePartie.push_back(points[i]);
+void Fourier::calculeFourierRapide(const ImageNiveauxGris & image) {
+
+	m_dataWidth = image.getNbColonnes();
+	m_dataHeight = image.getNbLignes();
+
+	m_fourier.resize(m_dataWidth * m_dataHeight);
+
+	std::vector<std::complex<double> > data;
+	data.reserve(m_dataWidth * m_dataHeight);
+	for(int i = 0; i < (m_dataWidth * m_dataHeight); i++)
+		data[i] = std::complex<double>(image.elementTableauPixels(i), 0);
+
+	// FFT sur les lignes
+	if(m_dataWidth > 1) {
+		for(int ligne = 0; ligne < m_dataHeight; ligne++) {
+
+			std::vector<std::complex<double> > temp, ligneRes;
+			temp.resize(m_dataWidth);
+			for(int i = 0; i < m_dataWidth; i++) 
+				temp[i] = data[(ligne * m_dataWidth) + i];
+
+			ligneRes = calculeFourierRapideLigne(temp, false);
+
+			for(int i = 0; i < ligneRes.size(); i++) {
+				ligneRes[i].real() /= (double)ligneRes.size();
+				ligneRes[i].imag() /= (double)ligneRes.size();
+				m_fourier[(ligne * m_dataWidth) + i] = ligneRes[i];
+			}
 		}
+	}
+	// FFT sur les colonnes
+	if(m_dataHeight > 1) {
+		for(int colonne = 0; colonne < m_dataWidth; colonne++) {
 
-		// Récursion sur la première partie
-		calculeFFTrec(premierePartie);
-		// récursion sur la deuxième partie
-		calculeFFTrec(deuxiemePartie);
+			std::vector<std::complex<double> > temp, ligneRes;
+			temp.resize(m_dataHeight);
+			for(int i = 0; i < m_dataHeight; i++)
+				temp[i] = m_fourier[colonne + (i * m_dataWidth)];
 
-		// Fusion
-		std::vector< std::complex<double> > retour;
-		retour.resize(points.size());
+			ligneRes = calculeFourierRapideLigne(temp, false);
 
-		return retour;
+			for(int i = 0; i < ligneRes.size(); i++) {
+				ligneRes[i].real() /= (double)ligneRes.size();
+				ligneRes[i].imag() /= (double)ligneRes.size();
+				m_fourier[colonne + (i * m_dataWidth)] = ligneRes[i];
+			}
+		}
 	}
 }
 
-*/
+std::vector<std::complex<double> > Fourier::calculeFourierRapideLigne(
+	const std::vector<std::complex<double> > & data, bool inverse) {
+
+	if(data.size() == 1)
+		return data;
+
+	int i;
+	std::complex<double> j(0,1), k;
+	std::vector< std::complex<double> > premierePartie, res1;
+	premierePartie.resize(data.size() / 2);
+	std::vector< std::complex<double> > deuxiemePartie, res2;
+	deuxiemePartie.resize(data.size() / 2);
+	std::vector< std::complex<double> > retour;
+	retour.resize(data.size());
+
+	for(i = 0; i < data.size(); i++) {
+		if(i%2 == 0)
+			premierePartie[i/2] = data[i];
+		else
+			deuxiemePartie[i/2] = data[i];
+	}
+
+	res1 = calculeFourierRapideLigne(premierePartie, inverse);
+	res2 = calculeFourierRapideLigne(deuxiemePartie, inverse);
+
+	for(i = 0; i < data.size() / 2; i++) {
+
+		if(inverse)
+			k = exp(j * (2.f * M_PI * i / data.size()));
+		else
+			k = exp(-j * (2.f * M_PI * i / data.size()));
+
+		retour[i] = res1[i] + k * res2[i];
+		retour[i + (data.size()/2)] = res1[i] - k * res2[i];
+	}
+	return retour;
+}
+
+std::vector<std::complex<double> > Fourier::fftinverse() {
+
+	return calculeFourierRapideLigne(m_fourier, true);
+}
+
+ImageNiveauxGris Fourier::fftinverseImg() {
+
+	ImageNiveauxGris retour(m_dataWidth, m_dataHeight, 255, "P2");
+	retour.m_tableauPixels.resize(m_dataWidth * m_dataHeight);
+	std::vector<std::complex<double> > tempRes;
+
+	tempRes.resize(m_dataWidth * m_dataHeight);
+
+	if(m_dataHeight > 1) {
+		for(int colonne = 0; colonne < m_dataWidth; colonne++) {
+
+			std::vector<std::complex<double> > temp, ligneRes;
+			temp.resize(m_dataHeight);
+			for(int i = 0; i < m_dataHeight; i++)
+				temp[i] = m_fourier[colonne + (i * m_dataWidth)];
+
+			ligneRes = calculeFourierRapideLigne(temp, true);
+
+			for(int i = 0; i < ligneRes.size(); i++)
+				tempRes[colonne + (i * m_dataWidth)] = ligneRes[i];
+		}
+	}
+	if(m_dataWidth > 1) {
+		for(int ligne = 0; ligne < m_dataHeight; ligne++) {
+
+			std::vector<std::complex<double> > temp, ligneRes;
+			temp.resize(m_dataWidth);
+			for(int i = 0; i < m_dataWidth; i++) 
+				temp[i] = tempRes[(ligne * m_dataWidth) + i];
+
+			ligneRes = calculeFourierRapideLigne(temp, true);
+
+			for(int i = 0; i < ligneRes.size(); i++)
+				tempRes[(ligne * m_dataWidth) + i] = ligneRes[i];
+		}
+	}
+
+	for(int i = 0; i < m_dataWidth * m_dataHeight; i++)
+		retour.m_tableauPixels[i] = tempRes[i].real();
+
+	return retour;
+
+}

@@ -16,6 +16,7 @@ public:
 
 
 	int getDataSize() const;
+	std::vector<std::complex<double> > getData() const;
 	std::complex<double> operator()(const int i) const;
 };
 

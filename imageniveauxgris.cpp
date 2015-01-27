@@ -88,7 +88,6 @@ ImageNiveauxGris::~ImageNiveauxGris()
     std::vector<int>().swap(m_tableauPixels);
 }
 
-
 int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne)
 {
     return m_tableauPixels[ligne * m_nbColonnes + colonne];
@@ -97,6 +96,11 @@ int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne)
 const int & ImageNiveauxGris::elementTableauPixels(int ligne, int colonne) const
 {
     return m_tableauPixels[ligne * m_nbColonnes + colonne];
+}
+
+const int & ImageNiveauxGris::elementTableauPixels(int i) const 
+{
+    return m_tableauPixels[i];
 }
 
 void ImageNiveauxGris::sauverDansFichierPGM(std::string & nomFichierPGM) const 
