@@ -74,7 +74,7 @@ public:
      * @details 
      * Etend les valeurs des pixels de [min,max] à [0,m_niveauxIntensite] en conservant la dynamique de l'Histogramme.
      * 
-     * Préconisé sur les images dont l’histogramme d’origine est nul en dehors de l’intervalle [min,max].
+     * Préconisé sur les images dont l’Histogramme d’origine est nul en dehors de l’intervalle [min,max].
      * 
      * @param min l'extrémité basse du recadrage
      * @param max l'extrémité haute du recadrage

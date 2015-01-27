@@ -8,6 +8,7 @@
 #include "histogramme.h"
 #include "fonctionsCorrespondance.h"
 #include "fourier.h"
+#include "filtre.h"
 
 int main(int argc, char* argv[])
 {
@@ -42,6 +43,8 @@ int main(int argc, char* argv[])
     ImageNiveauxGris img("Image/lena.ascii.pgm");
 	Fourier f;
 	f.calculeFourierRapide(img);
+	Filtre filtre(f);
+	filtre.passeHautIdeal(10);
 	ImageNiveauxGris test(img.getNbColonnes(), img.getNbLignes(), 
 		img.getNiveauxIntensite(), img.getModeEncodage());
 	test.m_tableauPixels.resize(f.m_fourier.size());

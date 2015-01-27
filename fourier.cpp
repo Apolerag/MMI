@@ -11,6 +11,26 @@ Fourier::~Fourier() {
 	std::vector< std::complex<double> >().swap(m_fourier);
 }
 
+const int Fourier::getTailleTableau()
+{
+	return m_fourier.size();
+}
+
+const int Fourier::getWitdh()
+{
+	return m_dataWidth;
+}
+
+const int Fourier::getHeight()
+{
+	return m_dataHeight;
+}
+
+std::complex<double> & Fourier::elementFourier(const int i)
+{
+	return m_fourier[i];
+}
+
 int Fourier::indiceDecale(int i, int size) const {
 
 	int indice = (i >= 0) ?  i : size + i;

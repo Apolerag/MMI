@@ -25,6 +25,11 @@ public:
 	Fourier();
 	~Fourier();
 
+	const int getTailleTableau();
+	const int getWitdh();
+	const int getHeight();
+	std::complex<double>  & elementFourier(const int i);
+
 	void calculeFourierDiscrete(const Contour & contour);
 	void calculeFourierDiscrete(const ImageNiveauxGris & image);
 	void calculeFourierRapide(const Contour & contour);
