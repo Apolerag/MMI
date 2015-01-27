@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 
   FonctionsCorrespondance f(im);
 
-  ImageNiveauxGris res = f.egalisationHistogramme();
+  ImageNiveauxGris res = f.translation(200);
    //ImageNiveauxGris res(im);
 
  	Histogramme h = Histogramme(im);
