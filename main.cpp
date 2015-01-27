@@ -49,9 +49,7 @@ int main(int argc, char* argv[])
 		test.m_tableauPixels[i] = (f.m_fourier[i].real() > 0.025)? 255 : 0;
 	}
 	std::cout << std::endl;
-	ImageNiveauxGris ret = f.fftinverseImg();
 	test.sauverDansFichierPGM(out);
-	ret.sauverDansFichierPGM(out2);
 
     return 0;
 }

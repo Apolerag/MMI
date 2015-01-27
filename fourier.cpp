@@ -35,7 +35,7 @@ void Fourier::calculeFourierDiscrete(const Contour & contour) {
 	}
 }
 
-std::vector< std::complex<double> > Fourier::calculeFourierInverse() const {
+std::vector< std::complex<double> > Fourier::calculeFourierDiscreteInverse() const {
 
 	std::vector< std::complex<double> > inverse;
 	inverse.resize(m_dataWidth);
@@ -60,9 +60,10 @@ void Fourier::calculeFourierRapide(const Contour & contour) {
 
 	m_dataWidth = contour.getDataSize();
 	m_dataHeight = 1;
+	contour = true;
 
 	std::vector<std::complex<double> > data = contour.getData();
-	m_fourier = calculeFourierRapideLigne(data, false);
+	m_fourier = calculeFourierRapideLigne(false, data);
 
 	for(int i = 0; i < m_fourier.size(); i++) {
 		m_fourier[i].real() /= m_fourier.size();
@@ -74,6 +75,7 @@ void Fourier::calculeFourierRapide(const ImageNiveauxGris & image) {
 
 	m_dataWidth = image.getNbColonnes();
 	m_dataHeight = image.getNbLignes();
+	contour = false;
 
 	m_fourier.resize(m_dataWidth * m_dataHeight);
 
@@ -91,7 +93,7 @@ void Fourier::calculeFourierRapide(const ImageNiveauxGris & image) {
 			for(int i = 0; i < m_dataWidth; i++) 
 				temp[i] = data[(ligne * m_dataWidth) + i];
 
-			ligneRes = calculeFourierRapideLigne(temp, false);
+			ligneRes = calculeFourierRapideLigne(false, temp);
 
 			for(int i = 0; i < ligneRes.size(); i++) {
 				ligneRes[i].real() /= (double)ligneRes.size();
@@ -109,7 +111,7 @@ void Fourier::calculeFourierRapide(const ImageNiveauxGris & image) {
 			for(int i = 0; i < m_dataHeight; i++)
 				temp[i] = m_fourier[colonne + (i * m_dataWidth)];
 
-			ligneRes = calculeFourierRapideLigne(temp, false);
+			ligneRes = calculeFourierRapideLigne(false, temp);
 
 			for(int i = 0; i < ligneRes.size(); i++) {
 				ligneRes[i].real() /= (double)ligneRes.size();
@@ -120,19 +122,18 @@ void Fourier::calculeFourierRapide(const ImageNiveauxGris & image) {
 	}
 }
 
-std::vector<std::complex<double> > Fourier::calculeFourierRapideLigne(
-	const std::vector<std::complex<double> > & data, bool inverse) {
+std::vector<std::complex<double> > Fourier::calculeFourierRapideLigne(bool inverse,
+	const std::vector<std::complex<double> > & data) const {
 
 	if(data.size() == 1)
 		return data;
 
 	int i;
 	std::complex<double> j(0,1), k;
-	std::vector< std::complex<double> > premierePartie, res1;
+	std::vector< std::complex<double> > premierePartie, res1, deuxiemePartie, 
+		res2, retour;
 	premierePartie.resize(data.size() / 2);
-	std::vector< std::complex<double> > deuxiemePartie, res2;
 	deuxiemePartie.resize(data.size() / 2);
-	std::vector< std::complex<double> > retour;
 	retour.resize(data.size());
 
 	for(i = 0; i < data.size(); i++) {
@@ -142,8 +143,8 @@ std::vector<std::complex<double> > Fourier::calculeFourierRapideLigne(
 			deuxiemePartie[i/2] = data[i];
 	}
 
-	res1 = calculeFourierRapideLigne(premierePartie, inverse);
-	res2 = calculeFourierRapideLigne(deuxiemePartie, inverse);
+	res1 = calculeFourierRapideLigne(inverse, premierePartie);
+	res2 = calculeFourierRapideLigne(inverse, deuxiemePartie);
 
 	for(i = 0; i < data.size() / 2; i++) {
 
@@ -158,17 +159,13 @@ std::vector<std::complex<double> > Fourier::calculeFourierRapideLigne(
 	return retour;
 }
 
-std::vector<std::complex<double> > Fourier::fftinverse() {
+std::vector<std::complex<double> > Fourier::calculeFourierRapideInverse() const {
 
-	return calculeFourierRapideLigne(m_fourier, true);
-}
+	if(contour)
+		return calculeFourierRapideLigne(true, m_fourier);
 
-ImageNiveauxGris Fourier::fftinverseImg() {
-
-	ImageNiveauxGris retour(m_dataWidth, m_dataHeight, 255, "P2");
-	retour.m_tableauPixels.resize(m_dataWidth * m_dataHeight);
+	// Sinon c'est une image
 	std::vector<std::complex<double> > tempRes;
-
 	tempRes.resize(m_dataWidth * m_dataHeight);
 
 	if(m_dataHeight > 1) {
@@ -179,7 +176,7 @@ ImageNiveauxGris Fourier::fftinverseImg() {
 			for(int i = 0; i < m_dataHeight; i++)
 				temp[i] = m_fourier[colonne + (i * m_dataWidth)];
 
-			ligneRes = calculeFourierRapideLigne(temp, true);
+			ligneRes = calculeFourierRapideLigne(true, temp);
 
 			for(int i = 0; i < ligneRes.size(); i++)
 				tempRes[colonne + (i * m_dataWidth)] = ligneRes[i];
@@ -193,16 +190,11 @@ ImageNiveauxGris Fourier::fftinverseImg() {
 			for(int i = 0; i < m_dataWidth; i++) 
 				temp[i] = tempRes[(ligne * m_dataWidth) + i];
 
-			ligneRes = calculeFourierRapideLigne(temp, true);
+			ligneRes = calculeFourierRapideLigne(true, temp);
 
 			for(int i = 0; i < ligneRes.size(); i++)
 				tempRes[(ligne * m_dataWidth) + i] = ligneRes[i];
 		}
 	}
-
-	for(int i = 0; i < m_dataWidth * m_dataHeight; i++)
-		retour.m_tableauPixels[i] = tempRes[i].real();
-
-	return retour;
-
+	return tempRes;
 }

@@ -11,34 +11,27 @@ class Fourier
 {
 private:
 	
-
-	int indiceDecale(int i, int size) const;
-	std::vector<std::complex<double> > calculeFourierRapideRec(
-		const std::vector<std::complex<double> > & data);
-
-public:
-
 	std::vector< std::complex<double> > m_fourier;
 	int m_dataWidth;
 	int m_dataHeight;
+	bool contour ;
+
+	int indiceDecale(int i, int size) const;
+	std::vector<std::complex<double> > calculeFourierRapideLigne(bool inverse,
+		const std::vector<std::complex<double> > & data) const;
+
+public:
 
 	Fourier();
 	~Fourier();
 
 	void calculeFourierDiscrete(const Contour & contour);
-	void calculeFourierDiscrete(const ImageNiveauxGris & image);
 	void calculeFourierRapide(const Contour & contour);
-	std::vector<std::complex<double> > fftinverse();
-	ImageNiveauxGris fftinverseImg();
 	void calculeFourierRapide(const ImageNiveauxGris & image);
 
-	ImageNiveauxGris & getImageAmplitude();
-	ImageNiveauxGris & getImagePhase();
+	std::vector< std::complex<double> > calculeFourierDiscreteInverse() const;
+	std::vector< std::complex<double> > calculeFourierRapideInverse() const;
 
-	std::vector< std::complex<double> > calculeFourierInverse() const;
-
-	std::vector<std::complex<double> > calculeFourierRapideLigne(
-	const std::vector<std::complex<double> > & data, bool inverse);
 };
 
 #endif
