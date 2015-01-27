@@ -6,6 +6,7 @@
 Histogramme::Histogramme(const ImageNiveauxGris & img)
 {
     m_tableauDonnees.resize(img.getNiveauxIntensite()+1,0);
+    m_cumule.resize(img.getNiveauxIntensite()+1,0);
 
     for(int i = 0; i < img.getNbColonnes(); i++) {
         for(int j = 0; j < img.getNbLignes(); j++) {
@@ -13,6 +14,10 @@ Histogramme::Histogramme(const ImageNiveauxGris & img)
 		}
     }
 
+    m_cumule[0] = m_tableauDonnees[0];
+    for (int i = 1; i < m_cumule.size(); i++) {
+        m_cumule[i] = m_cumule[i-1] + m_tableauDonnees[i];
+    }
 }
 
 Histogramme::Histogramme()
@@ -27,6 +32,20 @@ Histogramme::Histogramme()
 Histogramme::~Histogramme()
 {
 	std::vector<int>().swap(m_tableauDonnees);
+}
+
+int Histogramme::getHistogramme(const int i)
+{
+    if(i < 0 || i >= m_tableauDonnees.size())
+        return -1;
+    else return m_tableauDonnees[i];
+}
+
+int Histogramme::getCumule(const int i)
+{
+    if(i < 0 || i >= m_cumule.size())
+        return -1;
+    else return m_cumule[i];
 }
 
 void Histogramme::sauverDansFichierTXT()

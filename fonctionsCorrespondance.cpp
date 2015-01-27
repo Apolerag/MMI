@@ -1,7 +1,14 @@
+/**
+ * @file fonctionsCorrespondance.cpp
+ * @authors Aurélien CHEMIER, Romane LHOMME
+ * @date janvier 2015
+ */
 #include "fonctionsCorrespondance.h"
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h> 
 
-FonctionsCorrespondance::FonctionsCorrespondance(const ImageNiveauxGris &im): m_image(im)
+FonctionsCorrespondance::FonctionsCorrespondance(const ImageNiveauxGris &im): m_image(im), m_histogramme(im)
 {
     m_fonction.resize(m_image.getNiveauxIntensite(),0);
 }
@@ -39,31 +46,16 @@ ImageNiveauxGris FonctionsCorrespondance::seuillage(const unsigned int seuil)
     return res;
 }
 
-ImageNiveauxGris FonctionsCorrespondance::translationPositive(const unsigned int pas)
+ImageNiveauxGris FonctionsCorrespondance::translation(const int pas)
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
-
-    for(int i = 0; i < res.getNbColonnes(); i++) {
+     for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
-                if(m_image.elementTableauPixels(j,i) + pas > m_image.getNiveauxIntensite())
+            if((m_image.elementTableauPixels(j,i) < abs(pas) ) && (pas < 0)) //cas où la pas est négatif
+                    res.elementTableauPixels(j,i) = 0;
+                else  if(m_image.elementTableauPixels(j,i) + pas > m_image.getNiveauxIntensite())
                     res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite();
                 else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i) + pas;
-        }
-    }
-
-    return res;
-}
-
-ImageNiveauxGris FonctionsCorrespondance::translationNegative(const unsigned int pas)
-{
-    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
-
-    for(int i = 0; i < res.getNbColonnes(); i++) {
-        for(int j = 0; j < res.getNbLignes(); j++) {
-                if(m_image.elementTableauPixels(j,i) < pas){
-                    res.elementTableauPixels(j,i) = 0;
-                }
-                else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i) - pas;
         }
     }
 
@@ -74,7 +66,7 @@ ImageNiveauxGris FonctionsCorrespondance::recadrage(const unsigned int min, cons
 {
     ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
-    for(unsigned int i =0; i < m_fonction.size(); i++){
+    for(unsigned int i = 0; i < m_fonction.size(); i++){
         if(i <= min ){
             m_fonction[i] = 0;
         }
@@ -94,3 +86,26 @@ ImageNiveauxGris FonctionsCorrespondance::recadrage(const unsigned int min, cons
 
     return res;
 }
+
+
+ImageNiveauxGris FonctionsCorrespondance::egalisationHistogramme()
+ {
+    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+
+    for(unsigned int i = 0; i < m_fonction.size(); i++){
+        m_fonction[i] = m_image.getNiveauxIntensite()*m_histogramme.getCumule(i)/(m_image.getNbColonnes()*m_image.getNbLignes());
+    }
+
+    for(unsigned int i = 0; i < m_fonction.size(); i++){
+        std::cout << m_fonction[i] <<" ";
+    }
+    std::cout<<std::endl;
+
+    for(unsigned int i = 0; i < res.getNbColonnes(); i++) {
+        for(unsigned int j = 0; j < res.getNbLignes(); j++) {
+                res.elementTableauPixels(j,i) = m_fonction[m_image.elementTableauPixels(j,i)];
+        }
+    }
+
+    return res;
+ }

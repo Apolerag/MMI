@@ -29,9 +29,12 @@ int main(int argc, char* argv[])
 
   FonctionsCorrespondance f(im);
 
-   // ImageNiveauxGris res = f.recadrage(20,230);
+  ImageNiveauxGris res = f.translation(200);
    //ImageNiveauxGris res(im);
+
  	Histogramme h = Histogramme(im);
+	h.sauverDansFichierTXT("im.txt");
+ 	h = Histogramme(res);
 	h.sauverDansFichierTXT("res.txt");
 
    im.sauverDansFichierPGM(out);
