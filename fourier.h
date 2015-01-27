@@ -3,7 +3,7 @@
  * @authors Aurélien CHEMIER, Romane LHOMME
  * @date janvier 2015
  */
- #ifndef FOURIER_H
+#ifndef FOURIER_H
 #define FOURIER_H
 
 #include <complex>
@@ -19,10 +19,16 @@ class Fourier
 {
 private:
 	
+	std::vector< std::complex<double> > m_fourier;
+	int m_dataWidth;
+	int m_dataHeight;
+	bool m_contour ;
 
 	int indiceDecale(int i, int size) const;
-	std::vector<std::complex<double> > calculeFourierRapideRec(
-		const std::vector<std::complex<double> > & data);
+	int indiceDecale2D(int x, int y) const;
+	std::vector<std::complex<double> > calculeFourierRapideLigne(bool inverse,
+		const std::vector<std::complex<double> > & data) const;
+	std::vector<std::complex<double> > fourierRapideShift();
 
 public:
 	/**
@@ -67,17 +73,13 @@ public:
 	 */
 	void calculeFourierDiscrete(const Image & image);
 	void calculeFourierRapide(const Contour & contour);
-	std::vector<std::complex<double> > fftinverse();
-	Image fftinverseImg();
 	void calculeFourierRapide(const Image & image);
 
-	Image & getImageAmplitude();
-	Image & getImagePhase();
+	std::vector< std::complex<double> > calculeFourierDiscreteInverse() const;
+	std::vector< std::complex<double> > calculeFourierRapideInverse() const;
 
-	std::vector< std::complex<double> > calculeFourierInverse() const;
+	Image getImageFourier();
 
-	std::vector<std::complex<double> > calculeFourierRapideLigne(
-	const std::vector<std::complex<double> > & data, bool inverse);
 };
 
 #endif

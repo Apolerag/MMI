@@ -43,18 +43,13 @@ int main(int argc, char* argv[])
     Image img("Image/lena.ascii.pgm");
 	Fourier f;
 	f.calculeFourierRapide(img);
-	Filtre filtre(f);
-	filtre.passeHautIdeal(10);
-	Image test(img.getNbColonnes(), img.getNbLignes(), 
-		img.getNiveauxIntensite(), img.getModeEncodage());
-	test.m_tableauPixels.resize(f.m_fourier.size());
-	for(int i = 0; i < f.m_fourier.size(); i++) {
-		test.m_tableauPixels[i] = (f.m_fourier[i].real() > 0.025)? 255 : 0;
-	}
-	std::cout << std::endl;
-	Image ret = f.fftinverseImg();
-	test.sauverDansFichierPGM(out);
-	ret.sauverDansFichierPGM(out2);
+	//Filtre filtre(f);
+	//filtre.passeHautIdeal(10);
+
+	Image fourierCentre = f.getImageFourier();
+	fourierCentre.sauverDansFichierPGM(out);
+
+
 
     return 0;
 }
