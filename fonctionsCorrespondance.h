@@ -13,10 +13,7 @@
 /**
  * @class FonctionsCorrespondance
  * @brief Permet l'application de fonctions de correspondance sur une image
- * 
- * @param im une ImageNiveauxGris
- * @return Une image sur laquelle une fonction de correspondance a été appliquée
- */
+  */
 class FonctionsCorrespondance
 {
 
@@ -49,7 +46,7 @@ public:
 
     /**
      * @brief Calcule le négatif de l'image
-     * @details Pour chaque pixel p de l'image, les pixels p' de l'image résultante prenne la valeur: m_niveauxIntensite - p
+     * @details Pour chaque pixel \f$ p \f$ de l'image, les pixels \f$ p'\f$  de l'image résultante prenne la valeur: \f$ m\_niveauxIntensite - p\f$ 
      * @return l'image négative de m_image
      */
     ImageNiveauxGris negatif();
