@@ -22,7 +22,7 @@ protected:
     /**
      * @brief Une image en niveau de gris
      */
-    ImageNiveauxGris m_image;
+    Image m_image;
     /**
      * @brief La fonction de correspondance appliquée
      */
@@ -38,7 +38,7 @@ public:
      * 
      * @param im l'image à modifiée
      */
-    FonctionsCorrespondance(const ImageNiveauxGris & im);
+    FonctionsCorrespondance(const Image & im);
     /**
      * @brief Destructeur de FonctionsCorrespondance
      */
@@ -49,7 +49,7 @@ public:
      * @details Pour chaque pixel \f$ p \f$ de l'image, les pixels \f$ p'\f$  de l'image résultante prenne la valeur: \f$ m\_niveauxIntensite - p\f$ 
      * @return l'image négative de m_image
      */
-    ImageNiveauxGris negatif();
+    Image negatif();
 
     /**
      * @brief Seuille l'image en fonction de l'entier seuil
@@ -58,7 +58,7 @@ public:
      * @param seuil la valeur du seuil
      * @return l'image seuillée de m_image
      */
-    ImageNiveauxGris seuillage(const unsigned int seuil);
+    Image seuillage(const unsigned int seuil);
 
     /**
      * @brief Modifie les pixels de l'image en fonctions d'un pas
@@ -67,21 +67,21 @@ public:
      * @param pas le pas de la translation (peut être négatif)
      * @return l'image translatée
      */
-    ImageNiveauxGris translation(const int pas);
+    Image translation(const int pas);
 
     /**
      * @brief Améliore la dynamique des images de niveau de gris
      * @details 
      * Etend les valeurs des pixels de [min,max] à [0,m_niveauxIntensite] en conservant la dynamique de l'Histogramme.
      * 
-     * Préconisé sur les images dont l’histogramme d’origine est nul en dehors de l’intervalle [min,max].
+     * Préconisé sur les images dont l’Histogramme d’origine est nul en dehors de l’intervalle [min,max].
      * 
      * @param min l'extrémité basse du recadrage
      * @param max l'extrémité haute du recadrage
      * 
      * @return l'image recadrée
      */
-    ImageNiveauxGris recadrage(const unsigned int min, const unsigned int max);
+    Image recadrage(const unsigned int min, const unsigned int max);
 
     /**
      * @brief Equilibre les valeurs de l'Histogramme
@@ -96,7 +96,7 @@ public:
      * 
      * @return l'image égalisée
      */
-    ImageNiveauxGris egalisationHistogramme();
+    Image egalisationHistogramme();
 };
 
 #endif

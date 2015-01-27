@@ -7,7 +7,7 @@
 #ifndef FILTRE_H
 #define FILTRE_H
 
-#include "contour.h"
+ #include "fourier.h"
 
 /**
  * @class Filtre
@@ -20,19 +20,25 @@ private:
 	/**
 	 * @brief l'image dans le domaine frequentiel
 	 */
-	std::vector< std::complex<double> > m_pointsComplexes;
+	Fourier &m_fourier;
 	/**
 	 * @brief le filtre appliqué
 	 */
 	std::vector< double> m_filtre;
+
+	/**
+	 * @brief applique le filtre calculé sur Fourier
+	 */
+	void appliqueFiltre();
+
 public:
 
 	/**
 	 * @brief Constructeur du filtre
 	 * 
-	 * @param pointsComplexes l'image à filtrer
+	 * @param fourier l'image à filtrer
 	 */
-	Filtre(const std::vector< std::complex<double> > &pointsComplexes);
+	Filtre(Fourier &fourier);
 	/**
 	 * @brief Destructeur
 	 */
@@ -51,11 +57,6 @@ public:
 	 */
 	void passeHautIdeal(const double rayon);
 
-	/**
-	 * @brief applique le filtre calculé sur l'image
-	 * @return l'image filtrée
-	 */
-	std::vector< std::complex<double> > appliqueFiltre();
 
 };
 

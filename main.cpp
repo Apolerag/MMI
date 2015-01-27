@@ -4,10 +4,11 @@
 #include <string>
 
 #include "contour.h"
-#include "imageniveauxgris.h"
+#include "image.h"
 #include "histogramme.h"
 #include "fonctionsCorrespondance.h"
 #include "fourier.h"
+#include "filtre.h"
 
 int main(int argc, char* argv[])
 {
@@ -21,16 +22,16 @@ int main(int argc, char* argv[])
         out = argv[2];
     else out = "Image/res.pgm";
 
-   ImageNiveauxGris im(in);
+   Image im(in);
 
-    //ImageNiveauxGris im2(im);
+    //Image im2(im);
 
     //im2.sauverDansFichierPGM(out);
 
   FonctionsCorrespondance f(im);
 
-  ImageNiveauxGris res = f.translation(200);
-   //ImageNiveauxGris res(im);
+  Image res = f.translation(200);
+   //Image res(im);
 
  	Histogramme h = Histogramme(im);
 	h.sauverDansFichierTXT("im.txt");
@@ -39,17 +40,11 @@ int main(int argc, char* argv[])
 
    im.sauverDansFichierPGM(out);
 */
-    ImageNiveauxGris img("Image/lena.ascii.pgm");
+    Image img("Image/lena.ascii.pgm");
 	Fourier f;
 	f.calculeFourierRapide(img);
-	ImageNiveauxGris test(img.getNbColonnes(), img.getNbLignes(), 
-		img.getNiveauxIntensite(), img.getModeEncodage());
-	test.m_tableauPixels.resize(f.m_fourier.size());
-	for(int i = 0; i < f.m_fourier.size(); i++) {
-		test.m_tableauPixels[i] = (f.m_fourier[i].real() > 0.025)? 255 : 0;
-	}
-	std::cout << std::endl;
-	test.sauverDansFichierPGM(out);
+	Filtre filtre(f);
+	filtre.passeHautIdeal(10);
 
     return 0;
 }

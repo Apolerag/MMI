@@ -14,5 +14,8 @@ $(EXEC): $(OBJ)
 %.o: %.cpp %.h
 	$(CXX) $(CXXFLAGS) $<
 
+doc:
+	doxygen
+
 clean:
-	rm -rf *.o *.exe *~
+	rm -rf *.o *.exe *~ doc/

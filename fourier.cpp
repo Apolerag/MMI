@@ -11,6 +11,26 @@ Fourier::~Fourier() {
 	std::vector< std::complex<double> >().swap(m_fourier);
 }
 
+const int Fourier::getTailleTableau()
+{
+	return m_fourier.size();
+}
+
+const int Fourier::getWitdh()
+{
+	return m_dataWidth;
+}
+
+const int Fourier::getHeight()
+{
+	return m_dataHeight;
+}
+
+std::complex<double> & Fourier::elementFourier(const int i)
+{
+	return m_fourier[i];
+}
+
 int Fourier::indiceDecale(int i, int size) const {
 
 	int indice = (i >= 0) ?  i : size + i;
@@ -60,7 +80,7 @@ void Fourier::calculeFourierRapide(const Contour & contour) {
 
 	m_dataWidth = contour.getDataSize();
 	m_dataHeight = 1;
-	contour = true;
+	m_contour = true;
 
 	std::vector<std::complex<double> > data = contour.getData();
 	m_fourier = calculeFourierRapideLigne(false, data);
@@ -71,11 +91,11 @@ void Fourier::calculeFourierRapide(const Contour & contour) {
 	}
 }
 
-void Fourier::calculeFourierRapide(const ImageNiveauxGris & image) {
+void Fourier::calculeFourierRapide(const Image & image) {
 
 	m_dataWidth = image.getNbColonnes();
 	m_dataHeight = image.getNbLignes();
-	contour = false;
+	m_contour = false;
 
 	m_fourier.resize(m_dataWidth * m_dataHeight);
 
@@ -161,7 +181,7 @@ std::vector<std::complex<double> > Fourier::calculeFourierRapideLigne(bool inver
 
 std::vector<std::complex<double> > Fourier::calculeFourierRapideInverse() const {
 
-	if(contour)
+	if(m_contour)
 		return calculeFourierRapideLigne(true, m_fourier);
 
 	// Sinon c'est une image
