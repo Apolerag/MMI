@@ -1,4 +1,10 @@
-#include "fourier.h"
+/**
+ * @file fourier.cpp
+ * @authors Aurélien CHEMIER, Romane LHOMME
+ * @date janvier 2015
+ */
+
+ #include "fourier.h"
 
 #include <iostream>
 
@@ -7,7 +13,6 @@ Fourier::Fourier() : m_dataWidth(0), m_dataHeight(0) {
 }
 
 Fourier::~Fourier() {
-
 	std::vector< std::complex<double> >().swap(m_fourier);
 }
 

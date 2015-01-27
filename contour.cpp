@@ -1,3 +1,8 @@
+/**
+ * @file contour.cpp
+ * @authors Aurélien CHEMIER, Romane LHOMME
+ * @date janvier 2015
+ */
 #include "contour.h"
 
 #include <assert.h>
