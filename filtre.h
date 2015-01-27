@@ -36,7 +36,7 @@ public:
 	/**
 	 * @brief Constructeur du filtre
 	 * 
-	 * @param pointsComplexes l'image à filtrer
+	 * @param fourier l'image à filtrer
 	 */
 	Filtre(Fourier &fourier);
 	/**

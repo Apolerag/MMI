@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "contour.h"
-#include "imageniveauxgris.h"
+#include "image.h"
 
 class Fourier
 {
@@ -31,14 +31,14 @@ public:
 	std::complex<double>  & elementFourier(const int i);
 
 	void calculeFourierDiscrete(const Contour & contour);
-	void calculeFourierDiscrete(const ImageNiveauxGris & image);
+	void calculeFourierDiscrete(const Image & image);
 	void calculeFourierRapide(const Contour & contour);
 	std::vector<std::complex<double> > fftinverse();
-	ImageNiveauxGris fftinverseImg();
-	void calculeFourierRapide(const ImageNiveauxGris & image);
+	Image fftinverseImg();
+	void calculeFourierRapide(const Image & image);
 
-	ImageNiveauxGris & getImageAmplitude();
-	ImageNiveauxGris & getImagePhase();
+	Image & getImageAmplitude();
+	Image & getImagePhase();
 
 	std::vector< std::complex<double> > calculeFourierInverse() const;
 

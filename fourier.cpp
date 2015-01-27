@@ -90,7 +90,7 @@ void Fourier::calculeFourierRapide(const Contour & contour) {
 	}
 }
 
-void Fourier::calculeFourierRapide(const ImageNiveauxGris & image) {
+void Fourier::calculeFourierRapide(const Image & image) {
 
 	m_dataWidth = image.getNbColonnes();
 	m_dataHeight = image.getNbLignes();
@@ -183,9 +183,9 @@ std::vector<std::complex<double> > Fourier::fftinverse() {
 	return calculeFourierRapideLigne(m_fourier, true);
 }
 
-ImageNiveauxGris Fourier::fftinverseImg() {
+Image Fourier::fftinverseImg() {
 
-	ImageNiveauxGris retour(m_dataWidth, m_dataHeight, 255, "P2");
+	Image retour(m_dataWidth, m_dataHeight, 255, "P2");
 	retour.m_tableauPixels.resize(m_dataWidth * m_dataHeight);
 	std::vector<std::complex<double> > tempRes;
 

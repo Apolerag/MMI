@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-Histogramme::Histogramme(const ImageNiveauxGris & img)
+Histogramme::Histogramme(const Image & img)
 {
     m_tableauDonnees.resize(img.getNiveauxIntensite()+1,0);
     m_cumule.resize(img.getNiveauxIntensite()+1,0);

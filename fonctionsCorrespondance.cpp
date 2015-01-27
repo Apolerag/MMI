@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
-FonctionsCorrespondance::FonctionsCorrespondance(const ImageNiveauxGris &im): m_image(im), m_histogramme(im)
+FonctionsCorrespondance::FonctionsCorrespondance(const Image &im): m_image(im), m_histogramme(im)
 {
     m_fonction.resize(m_image.getNiveauxIntensite(),0);
 }
@@ -18,9 +18,9 @@ FonctionsCorrespondance::~FonctionsCorrespondance()
     std::vector<int>().swap(m_fonction);
 }
 
-ImageNiveauxGris FonctionsCorrespondance::negatif()
+Image FonctionsCorrespondance::negatif()
 {
-    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+    Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
@@ -31,9 +31,9 @@ ImageNiveauxGris FonctionsCorrespondance::negatif()
     return res;
 }
 
-ImageNiveauxGris FonctionsCorrespondance::seuillage(const unsigned int seuil)
+Image FonctionsCorrespondance::seuillage(const unsigned int seuil)
 {
-    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+    Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
@@ -46,9 +46,9 @@ ImageNiveauxGris FonctionsCorrespondance::seuillage(const unsigned int seuil)
     return res;
 }
 
-ImageNiveauxGris FonctionsCorrespondance::translation(const int pas)
+Image FonctionsCorrespondance::translation(const int pas)
 {
-    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+    Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
      for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
             if((m_image.elementTableauPixels(j,i) < abs(pas) ) && (pas < 0)) //cas où la pas est négatif
@@ -62,9 +62,9 @@ ImageNiveauxGris FonctionsCorrespondance::translation(const int pas)
     return res;
 }
 
-ImageNiveauxGris FonctionsCorrespondance::recadrage(const unsigned int min, const unsigned int max)
+Image FonctionsCorrespondance::recadrage(const unsigned int min, const unsigned int max)
 {
-    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+    Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(unsigned int i = 0; i < m_fonction.size(); i++){
         if(i <= min ){
@@ -88,9 +88,9 @@ ImageNiveauxGris FonctionsCorrespondance::recadrage(const unsigned int min, cons
 }
 
 
-ImageNiveauxGris FonctionsCorrespondance::egalisationHistogramme()
+Image FonctionsCorrespondance::egalisationHistogramme()
  {
-    ImageNiveauxGris res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+    Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
     for(unsigned int i = 0; i < m_fonction.size(); i++){
         m_fonction[i] = m_image.getNiveauxIntensite()*m_histogramme.getCumule(i)/(m_image.getNbColonnes()*m_image.getNbLignes());

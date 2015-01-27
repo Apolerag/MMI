@@ -1,8 +1,7 @@
 #ifndef HISTOGRAMME_H
 #define HISTOGRAMME_H
 
-#include "imagecouleur.h"
-#include "imageniveauxgris.h"
+#include "image.h"
 
 #include <vector>
 
@@ -12,7 +11,7 @@ private:
 	std::vector<int> m_tableauDonnees;
 	std::vector<int> m_cumule;
 public:
-    Histogramme(const ImageNiveauxGris & img);
+    Histogramme(const Image & img);
 	Histogramme();
 	// Histogramme(const ImageCouleur & img); travailler sur la luminance
 	~Histogramme();
