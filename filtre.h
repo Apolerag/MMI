@@ -73,6 +73,13 @@ public:
 	void passeBasGaussien(const double rayon);
 
 	/**
+	 * @brief Calcule le filtre de passe Haut Gaussien de taille \f$ rayon \f$
+	 * 
+	 * @param rayon le rayon du filtre
+	 */
+	void passeHautGaussien(const double rayon);
+
+	/**
 	 * @brief renvoie le Fourier stocké
 	 */
 	Fourier returnFourier();

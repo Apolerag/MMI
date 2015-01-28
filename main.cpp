@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	Fourier f;
 	f.calculeFourierRapide(img);
 	Filtre filtre(f);
-	filtre.passeBasIdeal(80);
+	filtre.passeHautGaussien(240);
   f = filtre.returnFourier(); 
 
 	Image fourierCentre = f.getImageFourier(true);

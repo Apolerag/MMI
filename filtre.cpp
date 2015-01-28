@@ -90,15 +90,48 @@ void Filtre::passeBasGaussien(const double rayon)
 	{
 		for (int colonne = 0; colonne < m_fourier.getHeight(); ++colonne)
 		{
-			double dX = fabs(ligne - centreLigne), dY = fabs(colonne- centreColonne);
-			double d = 1.f / 2 * pow(rayon,2)*M_PI;
-			double e = exp(-(pow(dX,2) + pow(dY,2))/(2*pow(rayon,2)));
-			m_filtre[ligne * m_fourier.getHeight() + colonne] = d*e;
+				
+				/*double dX = fabs(ligne - centreLigne), dY = fabs(colonne- centreColonne);
+				double e = exp(-(double)pow(ligne - centreLigne,2)/2.0*pow(dX,2) - (double)pow(colonne- centreColonne,2)/2.0*pow(dY,2) );
+
+				m_filtre[ligne * m_fourier.getHeight() + colonne] = rayon * e;
+				std::cout<<rayon * e<< " ";*/
+
+				double gX = exp(-pow(ligne - centreLigne,2)/rayon);
+				double gY = exp(-pow(colonne - centreColonne,2)/rayon);
+				m_filtre[ligne * m_fourier.getHeight() + colonne] = gX*gY;
+			
 		}
 	}
 	appliqueFiltre();
 }
 
+void Filtre::passeHautGaussien(const double rayon)
+{
+	m_filtre.resize(m_fourier.getTailleTableau());
+
+	int centreLigne = m_fourier.getWitdh() / 2;
+	int centreColonne = m_fourier.getHeight() / 2;
+
+	for (int ligne = 0; ligne < m_fourier.getWitdh(); ++ligne)
+	{
+		for (int colonne = 0; colonne < m_fourier.getHeight(); ++colonne)
+		{
+				
+				/*double dX = fabs(ligne - centreLigne), dY = fabs(colonne- centreColonne);
+				double e = exp(-(double)pow(ligne - centreLigne,2)/2.0*pow(dX,2) - (double)pow(colonne- centreColonne,2)/2.0*pow(dY,2) );
+
+				m_filtre[ligne * m_fourier.getHeight() + colonne] = rayon * e;
+				std::cout<<rayon * e<< " ";*/
+
+				double gX = 1-exp(-pow(ligne - centreLigne,2)/rayon);
+				double gY = 1-exp(-pow(colonne - centreColonne,2)/rayon);
+				m_filtre[ligne * m_fourier.getHeight() + colonne] = gX*gY;
+			
+		}
+	}
+	appliqueFiltre();
+}
 
 void Filtre::appliqueFiltre()
 {
