@@ -17,8 +17,10 @@ private:
 	bool m_contour ;
 
 	int indiceDecale(int i, int size) const;
+	int indiceDecale2D(int x, int y) const;
 	std::vector<std::complex<double> > calculeFourierRapideLigne(bool inverse,
 		const std::vector<std::complex<double> > & data) const;
+	std::vector<std::complex<double> > fourierRapideShift();
 
 public:
 
@@ -36,6 +38,8 @@ public:
 
 	std::vector< std::complex<double> > calculeFourierDiscreteInverse() const;
 	std::vector< std::complex<double> > calculeFourierRapideInverse() const;
+
+	Image getImageFourier();
 
 };
 

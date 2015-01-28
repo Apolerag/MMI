@@ -43,8 +43,13 @@ int main(int argc, char* argv[])
     Image img("Image/lena.ascii.pgm");
 	Fourier f;
 	f.calculeFourierRapide(img);
-	Filtre filtre(f);
-	filtre.passeHautIdeal(10);
+	//Filtre filtre(f);
+	//filtre.passeHautIdeal(10);
+
+	Image fourierCentre = f.getImageFourier();
+	fourierCentre.sauverDansFichierPGM(out);
+
+
 
     return 0;
 }
