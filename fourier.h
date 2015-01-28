@@ -40,6 +40,7 @@ public:
 	std::vector< std::complex<double> > calculeFourierRapideInverse() const;
 
 	Image getImageFourier();
+	Image getImageApresFourierInverse();
 
 };
 
