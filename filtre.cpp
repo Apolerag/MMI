@@ -104,10 +104,9 @@ void Filtre::appliqueFiltre()
 {
 	m_fourier.fourierRapideShift();
 	for (int i = 0; i < m_filtre.size(); ++i)
-	{
 		m_fourier.elementFourier(i) = m_filtre[i]*m_fourier.elementFourier(i);
-	}
-	m_fourier.fourierRapideShiftInverse();
+
+	m_fourier.fourierRapideShift();
 }
 
 Fourier Filtre::returnFourier()

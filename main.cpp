@@ -44,10 +44,10 @@ int main(int argc, char* argv[])
 	Fourier f;
 	f.calculeFourierRapide(img);
 	Filtre filtre(f);
-	filtre.passeBasIdeal(50);
+	filtre.passeBasIdeal(80);
   f = filtre.returnFourier(); 
 
-	Image fourierCentre = f.getImageFourier(false);
+	Image fourierCentre = f.getImageFourier(true);
 	Image retour = f.getImageApresFourierInverse();
 	fourierCentre.sauverDansFichierPGM(out);
 	retour.sauverDansFichierPGM(out2);
