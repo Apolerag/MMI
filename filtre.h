@@ -57,7 +57,10 @@ public:
 	 */
 	void passeHautIdeal(const double rayon);
 
-
+	/**
+	 * @brief renvoie le Fourier stocké
+	 */
+	Fourier returnFourier();
 };
 
 #endif

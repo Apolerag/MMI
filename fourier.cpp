@@ -231,7 +231,7 @@ std::vector<std::complex<double> > Fourier::calculeFourierRapideInverse() const 
 	return tempRes;
 }
 
-std::vector<std::complex<double> > Fourier::fourierRapideShift() {
+void Fourier::fourierRapideShift() {
 
 	std::vector<std::complex<double> > temp;
 	temp.resize(m_fourier.size());
@@ -242,19 +242,32 @@ std::vector<std::complex<double> > Fourier::fourierRapideShift() {
 				m_fourier[indiceDecale2D(i,j)];
 		}
 	}
-	return temp;
+	m_fourier = temp;
 }
 
-Image Fourier::getImageFourier() {
+void Fourier::fourierRapideShiftInverse() {
 
+	std::vector<std::complex<double> > temp;
+	temp.resize(m_fourier.size());
 
-	std::vector<std::complex<double> > shift = fourierRapideShift();
-	Image img(m_dataWidth, m_dataHeight, 2, "P2");
-	img.m_tableauPixels.resize(shift.size());
-
-	for(int i = 0; i < shift.size(); i++) {
-		img.m_tableauPixels[i] = (shift[i].real() > 0.025) ? 1 : 0;
+	for(int i = 0; i < m_dataHeight; i++) {
+		for(int j = 0; j < m_dataWidth; j++) {
+			temp[indiceDecale2D(i - m_dataHeight/2, j - m_dataWidth/2)] = 
+				m_fourier[indiceDecale2D(i,j)];
+		}
 	}
+	m_fourier = temp;
+}
+
+Image Fourier::getImageFourier(bool shift) {
+
+	Image img(m_dataWidth, m_dataHeight, 2, "P2");
+	if(shift) 
+		fourierRapideShift();
+	img.m_tableauPixels.resize(m_fourier.size());
+	for(int i = 0; i < m_fourier.size(); i++)
+	img.m_tableauPixels[i] = (m_fourier[i].real() > 0.025) ? 1 : 0;
+
 	return img;
 }
 

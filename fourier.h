@@ -48,7 +48,7 @@ private:
 	int indiceDecale(int i, int size) const;
 
 	/**
-	 * @brief trouve la position x y dans le tableau (point 2D dans tableau 1D)
+	 * @brief trouve la position x y dans le tableau (point 2D dans un tableau 1D avec valeur potentiellement négative)
 	 * 
 	 * @param x la ligne
 	 * @param y la colonne 
@@ -68,14 +68,14 @@ private:
 	std::vector<std::complex<double> > calculeFourierRapideLigne(bool inverse,
 		const std::vector<std::complex<double> > & data) const;
 
+	
+
+public:
 	/**
 	 * @brief place les hautes fréquences dans le centres de l'image
 	 * @return la transformée recentrée
 	 */
-	std::vector<std::complex<double> > fourierRapideShift();
-
-public:
-	
+	void fourierRapideShift(); 
 
 	/**
 	 * @brief Constructeur
@@ -134,8 +134,16 @@ public:
 	 * @brief stocke le spectre de la transformée de Fourier dans une Image 
 	 * @return Une Image 
 	 */
-	Image getImageFourier();
+	Image getImageFourier(bool shift);
+
+	/**
+	 * @brief stocke le résultat de l'inverse de Fourier dans une Image 
+	 * @return Une Image 
+	 */
 	Image getImageApresFourierInverse();
+
+	void fourierRapideShiftInverse();
+
 
 };
 

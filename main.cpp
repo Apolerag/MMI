@@ -40,13 +40,14 @@ int main(int argc, char* argv[])
 
    im.sauverDansFichierPGM(out);
 */
-    Image img("Image/lena.ascii.pgm");
+  Image img("Image/lena.ascii.pgm");
 	Fourier f;
 	f.calculeFourierRapide(img);
-	//Filtre filtre(f);
-	//filtre.passeHautIdeal(10);
+	Filtre filtre(f);
+	filtre.passeBasIdeal(50);
+  f = filtre.returnFourier(); 
 
-	Image fourierCentre = f.getImageFourier();
+	Image fourierCentre = f.getImageFourier(false);
 	Image retour = f.getImageApresFourierInverse();
 	fourierCentre.sauverDansFichierPGM(out);
 	retour.sauverDansFichierPGM(out2);
