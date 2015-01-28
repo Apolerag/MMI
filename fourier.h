@@ -132,6 +132,7 @@ public:
 
 	/**
 	 * @brief stocke le spectre de la transformée de Fourier dans une Image 
+	 * @param shift si il est à true, fourier est centré avant d'être enregistré dans l'image
 	 * @return Une Image 
 	 */
 	Image getImageFourier(bool shift);
@@ -141,9 +142,6 @@ public:
 	 * @return Une Image 
 	 */
 	Image getImageApresFourierInverse();
-
-	void fourierRapideShiftInverse();
-
 
 };
 

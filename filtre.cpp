@@ -33,10 +33,8 @@ void Filtre::passeBasIdeal(const double rayon)
 		{
 			if(sqrt(pow(ligne - centreLigne,2) + pow(colonne - centreColonne, 2) ) > rayon)
 				m_filtre[ligne * m_fourier.getHeight() + colonne] = 0.f;
-			else {
-					//std::cout << ligne * m_fourier.getHeight() + colonne<<" ";
-					m_filtre[ligne * m_fourier.getHeight() + colonne] = 1.f;
-				}
+			else
+				m_filtre[ligne * m_fourier.getHeight() + colonne] = 1.f;
 		}
 	}
 	appliqueFiltre();
@@ -44,7 +42,7 @@ void Filtre::passeBasIdeal(const double rayon)
 
 void Filtre::passeHautIdeal(const double rayon)
 {
-	m_filtre.resize(m_fourier.getTailleTableau(),0.f);
+	m_filtre.resize(m_fourier.getTailleTableau());
 
 	int centreLigne = m_fourier.getWitdh() / 2;
 	int centreColonne = m_fourier.getHeight() / 2;
@@ -55,7 +53,6 @@ void Filtre::passeHautIdeal(const double rayon)
 		{
 			if(sqrt(pow(ligne - centreLigne,2) + pow(colonne - centreColonne, 2) ) > rayon)
 				m_filtre[ligne * m_fourier.getHeight() + colonne] = 1.f;
-			//else m_filtre[ligne * m_fourier.getHeight() + colonne] = 0.f;
 		}
 	}
 	appliqueFiltre();
@@ -65,10 +62,9 @@ void Filtre::appliqueFiltre()
 {
 	m_fourier.fourierRapideShift();
 	for (int i = 0; i < m_filtre.size(); ++i)
-	{
 		m_fourier.elementFourier(i) = m_filtre[i]*m_fourier.elementFourier(i);
-	}
-	m_fourier.fourierRapideShiftInverse();
+
+	m_fourier.fourierRapideShift();
 }
 
 Fourier Filtre::returnFourier()
