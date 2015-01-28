@@ -8,11 +8,12 @@
 
  #include <utility>
  #include <iostream>
+ #include <math.h> 
+ #include <stdlib.h>
 
 Filtre::Filtre(Fourier &fourier):m_fourier(fourier)
 {
-	//m_fourier = fourier;
-	m_filtre.resize(m_fourier.getTailleTableau(),0.f);
+	m_filtre.resize(m_fourier.getTailleTableau());
 }
 
 Filtre::~Filtre()
@@ -33,8 +34,7 @@ void Filtre::passeBasIdeal(const double rayon)
 		{
 			if(sqrt(pow(ligne - centreLigne,2) + pow(colonne - centreColonne, 2) ) > rayon)
 				m_filtre[ligne * m_fourier.getHeight() + colonne] = 0.f;
-			else
-				m_filtre[ligne * m_fourier.getHeight() + colonne] = 1.f;
+			else m_filtre[ligne * m_fourier.getHeight() + colonne] = 1.f;
 		}
 	}
 	appliqueFiltre();
@@ -53,10 +53,52 @@ void Filtre::passeHautIdeal(const double rayon)
 		{
 			if(sqrt(pow(ligne - centreLigne,2) + pow(colonne - centreColonne, 2) ) > rayon)
 				m_filtre[ligne * m_fourier.getHeight() + colonne] = 1.f;
+			else m_filtre[ligne * m_fourier.getHeight() + colonne] = 0.f;
 		}
 	}
 	appliqueFiltre();
 }
+
+void Filtre::passeBandeIdeal(const double rayonMin, const double rayonMax)
+{
+	m_filtre.resize(m_fourier.getTailleTableau());
+
+	int centreLigne = m_fourier.getWitdh() / 2;
+	int centreColonne = m_fourier.getHeight() / 2;
+
+	for (int ligne = 0; ligne < m_fourier.getWitdh(); ++ligne)
+	{
+		for (int colonne = 0; colonne < m_fourier.getHeight(); ++colonne)
+		{
+			if(sqrt(pow(ligne - centreLigne,2) + pow(colonne - centreColonne, 2) ) < rayonMin
+				|| sqrt(pow(ligne - centreLigne,2) + pow(colonne - centreColonne, 2) ) > rayonMax)
+				m_filtre[ligne * m_fourier.getHeight() + colonne] = 0.f;
+			else m_filtre[ligne * m_fourier.getHeight() + colonne] = 1.f;
+		}
+	}
+	appliqueFiltre();
+}
+
+void Filtre::passeBasGaussien(const double rayon)
+{
+	m_filtre.resize(m_fourier.getTailleTableau());
+
+	int centreLigne = m_fourier.getWitdh() / 2;
+	int centreColonne = m_fourier.getHeight() / 2;
+
+	for (int ligne = 0; ligne < m_fourier.getWitdh(); ++ligne)
+	{
+		for (int colonne = 0; colonne < m_fourier.getHeight(); ++colonne)
+		{
+			double dX = fabs(ligne - centreLigne), dY = fabs(colonne- centreColonne);
+			double d = 1.f / 2 * pow(rayon,2)*M_PI;
+			double e = exp(-(pow(dX,2) + pow(dY,2))/(2*pow(rayon,2)));
+			m_filtre[ligne * m_fourier.getHeight() + colonne] = d*e;
+		}
+	}
+	appliqueFiltre();
+}
+
 
 void Filtre::appliqueFiltre()
 {

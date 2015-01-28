@@ -50,12 +50,27 @@ public:
 	 * @param rayon le rayon du filtre
 	 */
 	void passeBasIdeal(const double rayon);
+
 	/**
 	 * @brief Calcule le filtre de passe Haut Idéal de taille \f$ rayon \f$
 	 * 
 	 * @param rayon le rayon du filtre
 	 */
 	void passeHautIdeal(const double rayon);
+
+	/**
+	 * @brief Calcule le filtre de passe Bande Idéal de taille \f$ [rayonMin; rayonMax] \f$
+	 * 
+	 * @param rayon le rayon du filtre
+	 */
+	void passeBandeIdeal(const double rayonMin, const double rayonMax);
+
+	/**
+	 * @brief Calcule le filtre de passe Bas Gaussien de taille \f$  rayon \f$
+	 * 
+	 * @param rayon le rayon du filtre
+	 */
+	void passeBasGaussien(const double rayon);
 
 	/**
 	 * @brief renvoie le Fourier stocké
