@@ -1,3 +1,8 @@
+/**
+ * @file histogramme.cpp
+ * @authors Aurélien CHEMIER, Romane LHOMME
+ * @date janvier 2015
+ */
 #include "histogramme.h"
 
 #include <fstream>
@@ -22,11 +27,6 @@ Histogramme::Histogramme(const Image & img)
 
 Histogramme::Histogramme()
 {
-    m_tableauDonnees.resize(5);
-    for (int i = 0; i < m_tableauDonnees.size(); ++i)
-    {
-        m_tableauDonnees[i] = (5+i)*(5-i);
-    }
 }
 
 Histogramme::~Histogramme()
@@ -67,7 +67,7 @@ void Histogramme::sauverDansFichierTXT(const std::string & nomFichierTXT)
         fichier << "# Histogramme sur " << m_tableauDonnees.size()-1 << " niveaux d'intensité" << std::endl;
     	fichier << "# Intensite / Compte" << std::endl;
 
-    	for(unsigned int i = 0; i < m_tableauDonnees.size(); i++)
+    	for(int i = 0; i < m_tableauDonnees.size(); i++)
     		fichier << i << " " << m_tableauDonnees[i] << std::endl;
 
     	fichier.close();
@@ -87,7 +87,7 @@ void Histogramme::lireDansFichierTXT(const std::string & nomFichierTXT)
         std::string s;
         fichier >> s >> s >> s >> taille;
         m_tableauDonnees.resize(taille+1);
-    	for (unsigned int i = 0; i < m_tableauDonnees.size(); ++i)
+    	for (int i = 0; i < m_tableauDonnees.size(); ++i)
     	{
     		fichier >> i  >> m_tableauDonnees[i] ;
     	}

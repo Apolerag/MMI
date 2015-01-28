@@ -12,7 +12,7 @@
 
 /**
  * @class FonctionsCorrespondance
- * @brief Permet l'application de fonctions de correspondance sur une image
+ * @brief Permet l'application de fonctions de correspondance sur une Image
   */
 class FonctionsCorrespondance
 {
@@ -23,14 +23,7 @@ protected:
      * @brief Une image en niveau de gris
      */
     Image m_image;
-    /**
-     * @brief La fonction de correspondance appliquée
-     */
-    std::vector<int> m_fonction;
-    /**
-     * @brief l'Histogramme de l'image
-     */
-    Histogramme m_histogramme;
+    
 public:
 
     /**
@@ -58,7 +51,7 @@ public:
      * @param seuil la valeur du seuil
      * @return l'image seuillée de m_image
      */
-    Image seuillage(const unsigned int seuil);
+    Image seuillage(const int seuil);
 
     /**
      * @brief Modifie les pixels de l'image en fonctions d'un pas
@@ -81,7 +74,7 @@ public:
      * 
      * @return l'image recadrée
      */
-    Image recadrage(const unsigned int min, const unsigned int max);
+    Image recadrage(const int min, const int max);
 
     /**
      * @brief Equilibre les valeurs de l'Histogramme

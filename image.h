@@ -22,12 +22,12 @@ private:
 	 * @brief P2 ou P5 
 	 */
 	std::string m_mode_encodage ;
-	unsigned int m_nbColonnes ;
-	unsigned int m_nbLignes ;
+	int m_nbColonnes ;
+	int m_nbLignes ;
 	/**
 	 * @brief la valeur max que peut avoir un pixel
 	 */
-	unsigned int m_niveauxIntensite ;  
+	int m_niveauxIntensite ;  
 
 public:
 
@@ -63,9 +63,9 @@ public:
     ~Image();
 
     /* getter et setter*/
-    const unsigned int getNbColonnes() const;
-	const unsigned int getNbLignes() const;
-	const unsigned int getNiveauxIntensite() const;
+    const int getNbColonnes() const;
+	const int getNbLignes() const;
+	const int getNiveauxIntensite() const;
 	const std::string getModeEncodage() const;
     int & elementTableauPixels(int ligne, int colonne);
     const int & elementTableauPixels(int ligne, int colonne) const;

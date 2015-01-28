@@ -8,14 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
-FonctionsCorrespondance::FonctionsCorrespondance(const Image &im): m_image(im), m_histogramme(im)
+FonctionsCorrespondance::FonctionsCorrespondance(const Image &im): m_image(im)
 {
-    m_fonction.resize(m_image.getNiveauxIntensite(),0);
 }
 
 FonctionsCorrespondance::~FonctionsCorrespondance()
-{
-    std::vector<int>().swap(m_fonction);
+{   
 }
 
 Image FonctionsCorrespondance::negatif()
@@ -31,7 +29,7 @@ Image FonctionsCorrespondance::negatif()
     return res;
 }
 
-Image FonctionsCorrespondance::seuillage(const unsigned int seuil)
+Image FonctionsCorrespondance::seuillage(const int seuil)
 {
     Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
 
@@ -49,38 +47,40 @@ Image FonctionsCorrespondance::seuillage(const unsigned int seuil)
 Image FonctionsCorrespondance::translation(const int pas)
 {
     Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
-     for(int i = 0; i < res.getNbColonnes(); i++) {
+    for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
             if((m_image.elementTableauPixels(j,i) < abs(pas) ) && (pas < 0)) //cas où la pas est négatif
-                    res.elementTableauPixels(j,i) = 0;
-                else  if(m_image.elementTableauPixels(j,i) + pas > m_image.getNiveauxIntensite())
-                    res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite();
-                else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i) + pas;
+                res.elementTableauPixels(j,i) = 0;
+            else  if(m_image.elementTableauPixels(j,i) + pas > m_image.getNiveauxIntensite())
+                res.elementTableauPixels(j,i) = m_image.getNiveauxIntensite();
+            else res.elementTableauPixels(j,i) = m_image.elementTableauPixels(j,i) + pas;
         }
     }
 
     return res;
 }
 
-Image FonctionsCorrespondance::recadrage(const unsigned int min, const unsigned int max)
+Image FonctionsCorrespondance::recadrage(const int min, const int max)
 {
     Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+     std::vector<int> fonction;
+     fonction.resize(m_image.getNiveauxIntensite(),0);
 
-    for(unsigned int i = 0; i < m_fonction.size(); i++){
+    for(int i = 0; i < fonction.size(); i++){
         if(i <= min ){
-            m_fonction[i] = 0;
+            fonction[i] = 0;
         }
         else if(i >= max) {
-            m_fonction[i] = m_image.getNiveauxIntensite();
+            fonction[i] = m_image.getNiveauxIntensite();
         }
         else {
-            m_fonction[i] = m_image.getNiveauxIntensite()*i/(max-min) - min*m_image.getNiveauxIntensite()/(max-min);
+            fonction[i] = m_image.getNiveauxIntensite()*i/(max-min) - min*m_image.getNiveauxIntensite()/(max-min);
         }
     }
 
-    for(unsigned int i = 0; i < res.getNbColonnes(); i++) {
-        for(unsigned int j = 0; j < res.getNbLignes(); j++) {
-                res.elementTableauPixels(j,i) = m_fonction[m_image.elementTableauPixels(j,i)];
+    for(int i = 0; i < res.getNbColonnes(); i++) {
+        for(int j = 0; j < res.getNbLignes(); j++) {
+                res.elementTableauPixels(j,i) = fonction[m_image.elementTableauPixels(j,i)];
         }
     }
 
@@ -91,19 +91,17 @@ Image FonctionsCorrespondance::recadrage(const unsigned int min, const unsigned 
 Image FonctionsCorrespondance::egalisationHistogramme()
  {
     Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
+    Histogramme histo(m_image);
+    std::vector<int> fonction;
+    fonction.resize(m_image.getNiveauxIntensite(),0);
 
-    for(unsigned int i = 0; i < m_fonction.size(); i++){
-        m_fonction[i] = m_image.getNiveauxIntensite()*m_histogramme.getCumule(i)/(m_image.getNbColonnes()*m_image.getNbLignes());
+    for(int i = 0; i < fonction.size(); i++){
+        fonction[i] = m_image.getNiveauxIntensite()*histo.getCumule(i)/(m_image.getNbColonnes()*m_image.getNbLignes());
     }
 
-    for(unsigned int i = 0; i < m_fonction.size(); i++){
-        std::cout << m_fonction[i] <<" ";
-    }
-    std::cout<<std::endl;
-
-    for(unsigned int i = 0; i < res.getNbColonnes(); i++) {
-        for(unsigned int j = 0; j < res.getNbLignes(); j++) {
-                res.elementTableauPixels(j,i) = m_fonction[m_image.elementTableauPixels(j,i)];
+    for(int i = 0; i < res.getNbColonnes(); i++) {
+        for(int j = 0; j < res.getNbLignes(); j++) {
+                res.elementTableauPixels(j,i) = fonction[m_image.elementTableauPixels(j,i)];
         }
     }
 

@@ -57,8 +57,8 @@ Image::Image(const std::string & nomFichierPGM)
         }
         else */if(m_mode_encodage.compare("P2") == 0) {
             
-            for(unsigned int i = 0; i < m_nbColonnes; i++) {
-                for(unsigned int j = 0; j < m_nbLignes; j++) {
+            for(int i = 0; i < m_nbColonnes; i++) {
+                for(int j = 0; j < m_nbLignes; j++) {
                     fichier >> temp ;
                     elementTableauPixels(j, i) = temp;
                 }
@@ -80,8 +80,8 @@ Image::Image(const Image & image)
 
     m_tableauPixels.resize(m_nbColonnes * m_nbLignes);
 
-    for(unsigned int i = 0; i < m_nbColonnes; i++) {
-        for(unsigned int j = 0; j < m_nbLignes; j++) {
+    for(int i = 0; i < m_nbColonnes; i++) {
+        for(int j = 0; j < m_nbLignes; j++) {
             elementTableauPixels(j,i) = image.elementTableauPixels(j,i);
         }
     }
@@ -92,17 +92,17 @@ Image::~Image()
     std::vector<int>().swap(m_tableauPixels);
 }
 
-const unsigned int Image::getNbColonnes() const
+const int Image::getNbColonnes() const
 {
     return m_nbColonnes;
 }
 
-const unsigned int Image::getNbLignes() const
+const int Image::getNbLignes() const
 {
     return m_nbLignes;
 }
 
-const unsigned int Image::getNiveauxIntensite() const
+const int Image::getNiveauxIntensite() const
 {
     return m_niveauxIntensite;
 }
@@ -137,8 +137,8 @@ void Image::sauverDansFichierPGM(std::string & nomFichierPGM) const
         fichier << m_mode_encodage << " \n" << m_nbColonnes <<" "
             << m_nbLignes <<"\n"<< m_niveauxIntensite<<" \n";
 
-        for(unsigned int i = 0; i < m_nbColonnes; i++) {
-            for(unsigned int j = 0; j < m_nbLignes; j++) {
+        for(int i = 0; i < m_nbColonnes; i++) {
+            for(int j = 0; j < m_nbLignes; j++) {
                 if(m_mode_encodage.compare("P2") == 0) fichier << elementTableauPixels(j, i) <<" ";
                 else  fichier << (char)elementTableauPixels(j, i);
             }
