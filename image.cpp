@@ -12,7 +12,9 @@
 
 Image::Image(const int nbColonnes, const int nbLignes, const int niveauIntensite, const std::string & modeEncodage):
 m_mode_encodage(modeEncodage), m_nbColonnes(nbColonnes), m_nbLignes(nbLignes), m_niveauxIntensite(niveauIntensite)
-{}
+{
+     m_tableauPixels.resize(m_nbColonnes * m_nbLignes,0  );
+}
 
 Image::Image(const std::string & nomFichierPGM)
 {

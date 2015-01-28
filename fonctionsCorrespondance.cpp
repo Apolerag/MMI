@@ -93,13 +93,13 @@ Image FonctionsCorrespondance::egalisationHistogramme()
     Image res(m_image.getNbColonnes(),m_image.getNbLignes(), m_image.getNiveauxIntensite(), m_image.getModeEncodage());
     Histogramme histo(m_image);
     std::vector<int> fonction;
-    fonction.resize(m_image.getNiveauxIntensite(),0);
+    fonction.resize(m_image.getNiveauxIntensite());
 
     for(int i = 0; i < fonction.size(); i++){
         fonction[i] = m_image.getNiveauxIntensite()*histo.getCumule(i)/(m_image.getNbColonnes()*m_image.getNbLignes());
     }
 
-    for(int i = 0; i < res.getNbColonnes(); i++) {
+   for(int i = 0; i < res.getNbColonnes(); i++) {
         for(int j = 0; j < res.getNbLignes(); j++) {
                 res.elementTableauPixels(j,i) = fonction[m_image.elementTableauPixels(j,i)];
         }
