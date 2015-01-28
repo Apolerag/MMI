@@ -3,7 +3,7 @@ CXXFLAGS=-c -Wall -ansi -pedantic -Wc++11-extensions
 
 SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
-EXEC = programme.exe
+EXEC = programme
 
 all: $(EXEC)
 
